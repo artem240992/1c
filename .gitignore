@@ -1,4 +1,15 @@
 cache
+*.cache
 *.cfl
 1Cv8JobScheduler.*
 *1CL
+*.tmp
+*.lck
+*.lock
+*.log
+*.lgp
+*.lst
+*.grs
+Journal/
+Logs/
+*.evt

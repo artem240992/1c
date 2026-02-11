@@ -39,3 +39,4 @@ ConfiguratorTmp/
 *.backup
 *.bak
 ~*
+/data/objects

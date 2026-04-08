@@ -1,0 +1,67 @@
+name: Update README with commit message
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - 'Обработки/**'
+      - '.github/**'
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get full commit message
+        id: commit
+        run: |
+          # Сохраняем всё сообщение коммита (subject + body) в переменную
+          # Используем %B, чтобы получить полный текст
+          git log -1 --format='%B' > commit_msg.txt
+          # Первая строка (subject)
+          first_line=$(head -n1 commit_msg.txt)
+          # Остальные строки (body), если они есть
+          tail -n +2 commit_msg.txt > commit_body.txt
+          # Записываем в GITHUB_OUTPUT
+          echo "subject=$first_line" >> $GITHUB_OUTPUT
+          # Для body используем heredoc, чтобы сохранить переносы
+          {
+            echo 'body<<EOF'
+            cat commit_body.txt
+            echo EOF
+          } >> $GITHUB_OUTPUT
+
+      - name: Prepend commit info to README.md
+        run: |
+          # Формируем новый блок
+          NEW_BLOCK=$(cat <<-END
+          -------${{ steps.commit.outputs.subject }}--------
+
+          ${{ steps.commit.outputs.body }}
+
+          
+          END
+          )
+
+          # Добавляем пустую строку в конце блока (если body не пустой, уже есть перенос)
+          # Затем добавляем два переноса и текущее содержимое README
+          if [ -s commit_body.txt ]; then
+            # Если есть body, оставляем как есть
+            printf "%s\n\n%s\n" "$NEW_BLOCK" "$(cat README.md)" > README.md
+          else
+            # Если body пустой, просто записываем subject и пустую строку
+            printf "-------%s--------\n\n\n%s\n" "${{ steps.commit.outputs.subject }}" "$(cat README.md)" > README.md
+          fi
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: update README with commit info [skip ci]"
+          file_pattern: README.md

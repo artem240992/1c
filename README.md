@@ -93,6 +93,230 @@
 
 ---
 
+## 🤖 Автоматическое закрытие устаревших заказов
+
+---
+
+### 📌 Описание функционала
+
+<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0;">
+
+Реализован механизм автоматического закрытия заказов, которые:
+
+- 📅 **Созданы в прошлых годах** (год даты заказа < текущего года)
+- 🚫 **Не имеют статуса «Закрыт»**
+- 🔍 **Не были ранее закрыты роботом** (проверка по комментарию)
+
+</div>
+
+---
+
+### ⚙️ Механизм работы
+
+#### 📄 При открытии документа
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 10px;">✅ Условие</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">🔄 Действие</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Заказ создан в прошлом году<br><b>И</b><br>В комментариях есть «Закрыт роботом»</td>
+        <td style="padding: 10px;">
+            • 🟢 Элемент <b>«ФайлЗакрыт»</b> становится видимым<br>
+            • 🔴 Элемент <b>«СтатусЗаказа»</b> скрывается<br>
+            • 🔒 Форма переводится в режим <b>«Только просмотр»</b>
+        </td>
+    </tr>
+</table>
+
+#### 📦 Массовое закрытие заказов
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
+    <tr>
+        <th style="background: #f5a623; color: white; padding: 10px;">🔍 Поиск заказов</th>
+        <th style="background: #f5a623; color: white; padding: 10px;">⚡ Обработка</th>
+        <th style="background: #f5a623; color: white; padding: 10px;">📝 Результат</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">
+            • Год даты < текущего<br>
+            • Статус ≠ «Закрыт»<br>
+            • Нет фразы «Закрыт роботом»
+        </td>
+        <td style="padding: 10px;">
+            • Статус → «Закрыт»<br>
+            • Добавлен комментарий:<br>
+            <code>«Закрыт роботом [дата]»</code><br>
+            • Привилегированный режим
+        </td>
+        <td style="padding: 10px;">
+            ✅ Заказ закрыт<br>
+            📋 История в комментариях<br>
+            📊 Логирование в сообщениях
+        </td>
+    </tr>
+</table>
+
+---
+
+### 🛡️ Защита от повторного закрытия
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
+    <tr>
+        <th style="background: #2e7d32; color: white; padding: 10px;">✅ Проверка</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">⏭️ Результат</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Наличие фразы <b>«Закрыт роботом»</b></td>
+        <td style="padding: 10px;">⏭️ Заказ пропускается</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Статус уже <b>«Закрыт»</b></td>
+        <td style="padding: 10px;">⏭️ Заказ пропускается</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Комментарий пустой</td>
+        <td style="padding: 10px;">📝 Добавляется новая строка</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Комментарий не пустой</td>
+        <td style="padding: 10px;">📝 Добавляется строка с датой закрытия</td>
+    </tr>
+</table>
+
+---
+
+### 📋 Использование
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
+    <tr>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">🖐️ Способ</th>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">📌 Описание</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px; text-align: center;">🖐️ <b>Ручной запуск</b></td>
+        <td style="padding: 10px;">Через кнопку на форме или внешнюю обработку</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; text-align: center;">⏰ <b>Автоматический</b></td>
+        <td style="padding: 10px;">Настроено регламентное задание (ежедневно в 02:00)</td>
+    </tr>
+</table>
+
+---
+
+### ⚙️ Технические особенности
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;">
+
+<div style="background: #e8f5e9; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #2e7d32;">
+    ✅ Работает в привилегированном режиме
+</div>
+
+<div style="background: #e3f2fd; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #1565c0;">
+    📊 Логирование всех операций в окно сообщений
+</div>
+
+<div style="background: #fff3e0; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #f57c00;">
+    🛠️ Обработка ошибок по каждому заказу
+</div>
+
+<div style="background: #fce4ec; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #c62828;">
+    🚫 Игнорирование уже обработанных заказов
+</div>
+
+<div style="background: #f3e5f5; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #6a1b9a;">
+    📝 Сохранение истории закрытия в комментариях
+</div>
+
+</div>
+
+---
+
+### 📊 Схема работы
+<div style="background: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e1e4e8; margin: 16px 0; font-family: 'Segoe UI', Arial, sans-serif;">
+
+    <div style="text-align: center; font-size: 16px; font-weight: 600; color: #1a1a2e; margin-bottom: 12px;">
+        📋 СХЕМА РАБОТЫ МЕХАНИЗМА
+    </div>
+
+    <!-- Шаг 1 -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 20px; border-radius: 10px; text-align: center; font-weight: 600; font-size: 15px; margin: 8px 0; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);">
+        📅 ЗАКАЗ СОЗДАН В ПРОШЛОМ ГОДУ
+    </div>
+
+    <!-- Стрелка вниз -->
+    <div style="text-align: center; font-size: 28px; color: #4a90d9; line-height: 1.2;">
+        ⬇️
+    </div>
+
+    <!-- Шаг 2 -->
+    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 14px 20px; border-radius: 10px; text-align: center; font-weight: 600; font-size: 15px; margin: 8px 0; box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);">
+        🔍 ПРОВЕРКА: статус ≠ «Закрыт» И нет «Закрыт роботом»
+    </div>
+
+    <!-- Стрелка вниз с разветвлением -->
+    <div style="display: flex; justify-content: space-around; align-items: center; padding: 6px 0;">
+        <div style="text-align: center; font-size: 28px; color: #2e7d32;">⬇️</div>
+        <div style="font-size: 18px; color: #888;">или</div>
+        <div style="text-align: center; font-size: 28px; color: #c62828;">⬇️</div>
+    </div>
+
+    <!-- Шаг 3: Две колонки -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 8px 0;">
+
+        <!-- Левая колонка (ДА) -->
+        <div style="background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%); color: white; padding: 16px 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(86, 171, 47, 0.3);">
+            <div style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">✅ УСЛОВИЕ ВЫПОЛНЕНО</div>
+            <div style="line-height: 1.8; font-size: 14px;">
+                🟢 Статус → <b>«Закрыт»</b><br>
+                📝 Добавлен комментарий<br>
+                📊 Логирование в сообщениях
+            </div>
+        </div>
+
+        <!-- Правая колонка (НЕТ) -->
+        <div style="background: linear-gradient(135deg, #fdc830 0%, #f37335 100%); color: white; padding: 16px 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(243, 115, 53, 0.3);">
+            <div style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">⏭️ УСЛОВИЕ НЕ ВЫПОЛНЕНО</div>
+            <div style="line-height: 1.8; font-size: 14px;">
+                🔄 Заказ <b>пропускается</b><br>
+                📋 Остаётся без изменений<br>
+                💤 Ожидание следующей проверки
+            </div>
+        </div>
+
+    </div>
+
+</div>
+---
+
+### 🎯 Итог
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; padding: 12px;">📌 Что делает</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; padding: 12px;">🔧 Как работает</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; padding: 12px;">✅ Результат</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Закрывает устаревшие заказы</td>
+        <td style="padding: 10px;">Автоматически или вручную</td>
+        <td style="padding: 10px;">📂 База чистая, порядок</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Отмечает закрытые роботом</td>
+        <td style="padding: 10px;">Проверка комментариев</td>
+        <td style="padding: 10px;">📋 История закрытий</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Защищает от повторной обработки</td>
+        <td style="padding: 10px;">Двойная проверка</td>
+        <td style="padding: 10px;">🚫 Нет дублей</td>
+    </tr>
+</table>
+
+
 ## ⚙️ Основные возможности
 
 ### ✅ Контроль остатков материалов

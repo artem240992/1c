@@ -1,3 +1,5 @@
+-------Merge branch 'main' of https://github.com/artem240992/1c--------
+
 -------11--------
 
 # ⚡ Релиз 4.26.36.1

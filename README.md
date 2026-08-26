@@ -124,15 +124,31 @@
 
 В документе «ЗаявкаНаПриходНаСклад» реализована интеллектуальная фильтрация:
 
-| Режим | Разрешённые товары | Запрещённые товары |
-|-------|-------------------|-------------------|
-| `ДляПереплета = Истина` | Только вид «ТоварыДляПереплета» | Все остальные |
-| `ДляПереплета = Ложь` | Все товары | Вид «ТоварыДляПереплета» |
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Режим</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Разрешённые товары</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Запрещённые товары</th>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>🟢 ДляПереплета = Истина</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Только вид <b>«ТоварыДляПереплета»</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">⛔ Все остальные</td>
+    </tr>
+    <tr style="background: #fff3e0;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>🟠 ДляПереплета = Ложь</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Все товары</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">⛔ Вид <b>«ТоварыДляПереплета»</b></td>
+    </tr>
+</table>
 
 **Механизмы контроля:**
-- При выборе товара в табличной части
-- При изменении состояния галочки
-- В форме подбора товаров
+
+<ul style="list-style-type: none; padding-left: 0; line-height: 2;">
+    <li>🔹 <b>При выборе товара</b> в табличной части</li>
+    <li>🔹 <b>При изменении состояния</b> галочки</li>
+    <li>🔹 <b>В форме подбора</b> товаров</li>
+</ul>
 
 ---
 

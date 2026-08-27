@@ -73,45 +73,40 @@
 ---
 
 ## 🔄 Бизнес-процесс
+<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 16px 20px;"> <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;"> <span style="font-size: 20px;">🔄</span> <b style="color: #1a73e8;">Бизнес-процесс</b> — единый цикл управления материалами для переплета, объединяющий документы <b>«ПереплетВКР»</b>, <b>«ЗаявкаНаПриходНаСклад»</b> и <b>«ПриходнаяНакладная»</b>. </p> </td> </tr> </table>
 
-### Документ «ПЕРЕПЛЕТВКР»
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 14px 18px;">
+1. 🔍 Проверка остатков материалов (папки, скобы)
 
-**1.** 🔍 Проверка остатков материалов (папки, скобы)
+2. 📊 Остаток < требуемого?
 
-**2.** 📊 Остаток < требуемого?
-
-- ✅ **Да** → Документ записывается (НЕ ПРОВОДИТСЯ)
-  - ❓ Задаётся вопрос о создании заявки
-  - 👍 Пользователь соглашается → Создание ЗНПТ
-
-- ❌ **Нет** → Документ проводится
-
+<table cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; margin: 8px 0; border: none;"> <tr> <td style="padding: 6px 0; border: none; width: 50%; vertical-align: top;"> <div style="background: #e8f5e9; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #2e7d32;"> <b>✅ Да</b> → Документ записывается <b>(НЕ ПРОВОДИТСЯ)</b><br> <span style="padding-left: 18px;">❓ Задаётся вопрос о создании заявки</span><br> <span style="padding-left: 18px;">👍 Пользователь соглашается → Создание ЗНПТ</span> </div> </td> <td style="padding: 6px 0; border: none; width: 50%; vertical-align: top;"> <div style="background: #ffebee; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #c62828;"> <b>❌ Нет</b> → Документ <b>проводится</b><br> <span style="padding-left: 18px;">✅ Движения по регистрам</span><br> <span style="padding-left: 18px;">📊 Обновление накоплений</span> </div> </td> </tr> </table> </td> </tr> </table>
 
 ### Документ «ЗАЯВКА НА ПРИХОД НА СКЛАД»
 
-**Шаги выполнения:**
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #6a1b9a; background: #f3e5f5; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 14px 18px;">
+3. 🟢 Автоматически заполняется реквизит <b>«ДляПереплета» = Истина</b>
 
-3. 🟢 Автоматически заполняется реквизит «ДляПереплета» = Истина
 4. 🎯 Контроль выбора товаров:
-   - «ДляПереплета» включена → только вид «ТоварыДляПереплета»
-   - «ДляПереплета» выключена → все, кроме этого вида
-5. ⚙️ Проведение заявки → формирование движений по регистру «УчетМатериаловПереплета»
+
+<table cellpadding="6" cellspacing="0" style="border-collapse: collapse; width: 100%; margin: 6px 0; border: none;"> <tr> <td style="padding: 4px 0; border: none; width: 50%; vertical-align: top;"> <div style="background: #e8f5e9; padding: 6px 12px; border-radius: 4px; border-left: 3px solid #2e7d32; font-size: 14px;"> 🟢 <b>«ДляПереплета» включена</b> → только вид <b>«ТоварыДляПереплета»</b> </div> </td> <td style="padding: 4px 0; border: none; width: 50%; vertical-align: top;"> <div style="background: #fff3e0; padding: 6px 12px; border-radius: 4px; border-left: 3px solid #f57c00; font-size: 14px;"> 🟠 <b>«ДляПереплета» выключена</b> → все, кроме этого вида </div> </td> </tr> </table>
+5. ⚙️ Проведение заявки → формирование движений по регистру <b>«УчетМатериаловПереплета»</b>
+
 6. ⏳ Ожидание обработки регламентным заданием
+
+</td> </tr> </table>
 
 
 ### РЕГЛАМЕНТНОЕ ЗАДАНИЕ «ОБРАБОТКА ЗАЯВОК»
 
-<ul style="list-style-type: none; padding-left: 0; line-height: 2.5;">
-    <li style="margin: 16px 0; padding: 8px 0; border-bottom: 1px solid #eaecef;">
-        <b>1.</b>🛡️  Поиск необработанных заявок (Обработан = Ложь)
-    </li>
-    <li style="margin: 16px 0; padding: 8px 0; border-bottom: 1px solid #eaecef;">
-        <b>2.</b>🛡️  Создание документа «ПриходнаяНакладная» с переносом товаров
-    </li>
-    <li style="margin: 16px 0; padding: 8px 0; border-bottom: 1px solid #eaecef;">
-        <b>3.</b>🛡️  Отметка заявки как обработанной (Обработан = Истина)
-    </li>
-</ul>
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #1565c0; background: #e3f2fd; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 14px 18px;">
+7. 🔍 Поиск необработанных заявок (Обработан = Ложь)
+
+8. 📄 Создание документа <b>«ПриходнаяНакладная»</b> с переносом товаров
+
+9. ✅ Отметка заявки как обработанной (Обработан = Истина)
+
+</td> </tr> </table>
 
 
 ---

@@ -42,7 +42,7 @@ jobs:
         run: |
           # Формируем новый блок
           NEW_BLOCK=$(cat <<-END
-          -------${{ steps.commit.outputs.subject }}--------
+          # ⚡ ${{ steps.commit.outputs.subject }}
 
           ${{ steps.commit.outputs.body }}
 

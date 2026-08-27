@@ -8,8 +8,7 @@
     <tr>
         <td style="padding: 16px 20px;">
             <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
-                <span style="font-size: 20px;">⚡</span>
-                <b style="color: #1a73e8;">Релиз 4.26.36.1</b> — полный цикл управления материалами для переплета: 
+                <b style="color: #1a73e8;">⚡Релиз 4.26.36.1</b> — полный цикл управления материалами для переплета: 
                 от контроля остатков на складе до автоматического формирования приходных документов.
             </p>
             <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">

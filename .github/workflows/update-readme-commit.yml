@@ -42,7 +42,7 @@ jobs:
         run: |
           # Формируем новый блок
           NEW_BLOCK=$(cat <<-END
-          -------${{ steps.commit.outputs.subject }}--------
+          # ⚡ ${{ steps.commit.outputs.subject }}
 
           ${{ steps.commit.outputs.body }}
 
@@ -57,7 +57,7 @@ jobs:
             printf "%s\n\n%s\n" "$NEW_BLOCK" "$(cat README.md)" > README.md
           else
             # Если body пустой, просто записываем subject и пустую строку
-            printf "-------%s--------\n\n\n%s\n" "${{ steps.commit.outputs.subject }}" "$(cat README.md)" > README.md
+            printf "# ⚡ %s\n\n\n%s\n" "${{ steps.commit.outputs.subject }}" "$(cat README.md)" > README.md
           fi
 
       - name: Commit and push changes

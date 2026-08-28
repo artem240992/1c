@@ -18,12 +18,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Нужно для получения полной истории коммитов
 
       - name: Get full commit message
         id: commit
         run: |
           # Сохраняем всё сообщение коммита (subject + body) в переменную
-          # Используем %B, чтобы получить полный текст
           git log -1 --format='%B' > commit_msg.txt
           # Первая строка (subject)
           first_line=$(head -n1 commit_msg.txt)
@@ -38,7 +39,20 @@ jobs:
             echo EOF
           } >> $GITHUB_OUTPUT
 
+      - name: Check for "Релиз" in commit message
+        id: check
+        run: |
+          # Проверяем наличие слова "Релиз" в subject или body
+          if grep -qi "Релиз" commit_msg.txt; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "Слово 'Релиз' найдено в сообщении коммита" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "Слово 'Релиз' НЕ найдено в сообщении коммита, пропускаем обновление README" >> $GITHUB_STEP_SUMMARY
+          fi
+
       - name: Prepend commit info to README.md
+        if: steps.check.outputs.found == 'true'
         run: |
           # Формируем новый блок
           NEW_BLOCK=$(cat <<-END
@@ -50,8 +64,7 @@ jobs:
           END
           )
 
-          # Добавляем пустую строку в конце блока (если body не пустой, уже есть перенос)
-          # Затем добавляем два переноса и текущее содержимое README
+          # Добавляем пустую строку в конце блока
           if [ -s commit_body.txt ]; then
             # Если есть body, оставляем как есть
             printf "%s\n\n%s\n" "$NEW_BLOCK" "$(cat README.md)" > README.md
@@ -61,7 +74,8 @@ jobs:
           fi
 
       - name: Commit and push changes
+        if: steps.check.outputs.found == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs: update README with commit info [skip ci]"
+          commit_message: "docs: update README with release info [skip ci]"
           file_pattern: README.md

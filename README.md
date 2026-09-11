@@ -1,3 +1,428 @@
+# ⚡ Релиз 4.26.38.1
+
+## Переход на периодический регистр настроек проверки материалов: история, аудит и гибкое управление
+
+---
+
+<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 16px 20px;">
+            <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                <b style="color: #1a73e8;">⚡Релиз 4.26.38.1</b> — замена константы <b>«ДатаВключениеПроверкиматериаловВПереплет»</b> 
+                на периодический регистр сведений <b>«НастройкиПроверкиМатериаловПереплета»</b>.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+               ✅  Теперь проверка материалов управляется <b>по дате документа</b>, а не по одной «дате отсечения».
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Каждое изменение настройки <b>версионируется</b>: видно, кто и когда включал или выключал проверку.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Старое значение из константы <b>переносится автоматически</b> — история документов не ломается.
+            </p>
+        </td>
+    </tr>
+</table>
+
+---
+
+## 🎯 Основные цели релиза
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Цель</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Описание</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Гибкое управление проверкой</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Включение и выключение проверки многократно, с привязкой к датам</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Аудит изменений</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Фиксация ответственного и комментария для каждой записи</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Безболезненная миграция</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Значение из константы переносится автоматически, старое поведение сохраняется</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Чистота архитектуры</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Уход от «заплатки» в виде константы-переключателя</td>
+    </tr>
+</table>
+
+---
+
+<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 16px 20px;">
+            <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                <b style="color: #1a73e8;">##⚡ Регистр сведений «НастройкиПроверкиМатериаловПереплета»</b></p> 
+                <b style="color: #1a73e8;">### Описание функционала </b></p>
+                <b style="color: #1a73e8;">Проверка материалов теперь управляется периодическим регистром сведений с историей изменений.</b>
+                <b>**Как это работает:**</b></p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                1. 📅 **Периодичность «По дню»** — каждая запись действует с указанной даты до следующей записи. </p>
+    <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                2. 🔄 **Режим записи «Независимый»** — одна настройка, один ресурс.</p>
+        <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                3. 📊 **Ресурс «ПроверкаВключена»** — булево значение, действующее на дату.</p>
+    <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                4. 👤 **Реквизит «Ответственный»** — пользователь, изменивший настройку.</p>
+    <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                5. 📝 **Реквизит «Комментарий»** — причина или пояснение изменения.</p>
+        </td>
+    </tr>
+</table>
+
+---
+
+## 🔄 Бизнес-процесс
+
+<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 16px 20px;"> <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;"> <span style="font-size: 20px;">🔄</span> <b style="color: #1a73e8;">Бизнес-процесс</b> — единый цикл управления материалами для переплета, в котором правило проверки теперь определяется <b>по дате документа</b>, а не по одной дате отсечения. </p> </td> </tr> </table>
+
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 14px 18px;">
+1. 📄 Пользователь создаёт документ «ПереплетВКР»
+
+2. 📅 Система определяет дату документа
+
+3. 🔍 Запрос к регистру <b>«НастройкиПроверкиМатериаловПереплета»</b>:
+
+<table cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; margin: 8px 0; border: none;"> <tr> <td style="padding: 6px 0; border: none; width: 50%; vertical-align: top;"> <div style="background: #e8f5e9; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #2e7d32;"> <b>✅ Запись найдена</b><br> <span style="padding-left: 18px;">Берём значение из регистра</span><br> <span style="padding-left: 18px;">Игнорируем константу</span> </div> </td> <td style="padding: 6px 0; border: none; width: 50%; vertical-align: top;"> <div style="background: #fff3e0; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #f57c00;"> <b>⚠️ Записей нет</b><br> <span style="padding-left: 18px;">Fallback на константу</span><br> <span style="padding-left: 18px;">Старое поведение сохранено</span> </div> </td> </tr> </table>
+
+4. ⚙️ Проверка выполняется только если на дату документа настройка активна
+
+</td> </tr> </table>
+
+### Приоритет источников значения
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;"> <tr> <th style="background: #6a1b9a; color: white; padding: 10px;">🥇 Приоритет</th> <th style="background: #6a1b9a; color: white; padding: 10px;">📌 Источник</th> <th style="background: #6a1b9a; color: white; padding: 10px;">⚙️ Условие</th> </tr> <tr> <td style="padding: 10px; text-align: center;"><b>1</b></td> <td style="padding: 10px;">Регистр «НастройкиПроверкиМатериаловПереплета»</td> <td style="padding: 10px;">Есть запись с периодом ≤ даты документа</td> </tr> <tr> <td style="padding: 10px; text-align: center;"><b>2</b></td> <td style="padding: 10px;">Константа «ДатаВключениеПроверкиматериаловВПереплет»</td> <td style="padding: 10px;">Записей в регистре нет — используется как история</td> </tr> <tr> <td style="padding: 10px; text-align: center;"><b>3</b></td> <td style="padding: 10px;">Проверка выключена</td> <td style="padding: 10px;">Ни регистр, ни константа не задают значение</td> </tr> </table>
+
+---
+
+## 📦 Автоматический перенос значения из константы
+
+---
+
+### 📌 Описание функционала
+
+<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0;">
+
+При обновлении конфигурации система выполняет **однократную миграцию**:
+
+- 🔍 **Проверяет**, есть ли записи в регистре
+- 📅 **Читает** текущее значение константы
+- 📝 **Создаёт запись** в регистре с датой из константы и значением «Проверка включена»
+- 🛡️ **Повторный запуск** ничего не делает — миграция идемпотентна
+
+</div>
+
+---
+
+### ⚙️ Механизм работы
+
+#### 📄 При обновлении конфигурации
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 10px;">✅ Условие</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">🔄 Действие</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Регистр пуст<br><b>И</b><br>Константа заполнена</td>
+        <td style="padding: 10px;">
+            • 📅 Создаётся запись с периодом = дате из константы<br>
+            • ✅ Значение <b>«ПроверкаВключена = Истина»</b><br>
+            • 📝 Комментарий: <b>«Автоматический перенос из константы»</b>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Регистр уже содержит записи</td>
+        <td style="padding: 10px;">⏭️ Миграция пропускается</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Константа не заполнена</td>
+        <td style="padding: 10px;">⏭️ Переносить нечего</td>
+    </tr>
+</table>
+
+---
+
+### 🛡️ Защита от повторной миграции
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
+    <tr>
+        <th style="background: #2e7d32; color: white; padding: 10px;">✅ Проверка</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">⏭️ Результат</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Наличие записей в регистре</td>
+        <td style="padding: 10px;">⏭️ Миграция не выполняется</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Пустая константа</td>
+        <td style="padding: 10px;">⏭️ Миграция не выполняется</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Ошибка при записи</td>
+        <td style="padding: 10px;">📝 Запись в журнал регистрации</td>
+    </tr>
+</table>
+
+---
+
+### 📋 Использование
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
+    <tr>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">🖐️ Способ</th>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">📌 Описание</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px; text-align: center;">🖐️ <b>Ручное включение / выключение</b></td>
+        <td style="padding: 10px;">Через форму списка регистра — доступно администратору</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; text-align: center;">⏰ <b>Автоматический перенос</b></td>
+        <td style="padding: 10px;">Однократно при обновлении конфигурации через обработчик обновления ИБ</td>
+    </tr>
+</table>
+
+---
+
+### ⚙️ Технические особенности
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;">
+
+<div style="background: #e8f5e9; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #2e7d32;">
+    ✅ Периодичность «По дню» — история изменений
+</div>
+
+<div style="background: #e3f2fd; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #1565c0;">
+    📊 Режим записи «Независимый»
+</div>
+
+<div style="background: #fff3e0; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #f57c00;">
+    🛠️ Обработка ошибок миграции в журнале регистрации
+</div>
+
+<div style="background: #fce4ec; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #c62828;">
+    🚫 Блокировка не используется — гонок нет
+</div>
+
+<div style="background: #f3e5f5; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #6a1b9a;">
+    📝 Ответственный и комментарий в каждой записи
+</div>
+
+</div>
+
+---
+
+### 📊 Схема работы
+
+<div style="background: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e1e4e8; margin: 16px 0; font-family: 'Segoe UI', Arial, sans-serif;">
+
+    <div style="text-align: center; font-size: 16px; font-weight: 600; color: #1a1a2e; margin-bottom: 12px;">
+        📋 СХЕМА РАБОТЫ МЕХАНИЗМА
+    </div>
+
+    <!-- Шаг 1 -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 20px; border-radius: 10px; text-align: center; font-weight: 600; font-size: 15px; margin: 8px 0; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);">
+        📄 ДОКУМЕНТ «ПЕРЕПЛЕТВКР» СОЗДАЁТСЯ
+    </div>
+
+    <div style="text-align: center; font-size: 28px; color: #4a90d9; line-height: 1.2;">
+        ⬇️
+    </div>
+
+    <!-- Шаг 2 -->
+    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 14px 20px; border-radius: 10px; text-align: center; font-weight: 600; font-size: 15px; margin: 8px 0; box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);">
+        🔍 ЗАПРОС К РЕГИСТРУ ПО ДАТЕ ДОКУМЕНТА
+    </div>
+
+    <div style="display: flex; justify-content: space-around; align-items: center; padding: 6px 0;">
+        <div style="text-align: center; font-size: 28px; color: #2e7d32;">⬇️</div>
+        <div style="font-size: 18px; color: #888;">или</div>
+        <div style="text-align: center; font-size: 28px; color: #c62828;">⬇️</div>
+    </div>
+
+    <!-- Шаг 3: Две колонки -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 8px 0;">
+
+        <!-- Левая колонка -->
+        <div style="background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%); color: white; padding: 16px 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(86, 171, 47, 0.3);">
+            <div style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">✅ ЗАПИСЬ НАЙДЕНА</div>
+            <div style="line-height: 1.8; font-size: 14px;">
+                🟢 Берём значение из регистра<br>
+                ⚙️ Проверка по настройке<br>
+                📊 Константа игнорируется
+            </div>
+        </div>
+
+        <!-- Правая колонка -->
+        <div style="background: linear-gradient(135deg, #fdc830 0%, #f37335 100%); color: white; padding: 16px 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(243, 115, 53, 0.3);">
+            <div style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">⚠️ ЗАПИСЕЙ НЕТ</div>
+            <div style="line-height: 1.8; font-size: 14px;">
+                🔄 Fallback на константу<br>
+                📅 Старое поведение сохранено<br>
+                🛡️ История не ломается
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+---
+
+### 🎯 Итог
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; padding: 12px;">📌 Что делает</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; padding: 12px;">🔧 Как работает</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; padding: 12px;">✅ Результат</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Управляет проверкой материалов</td>
+        <td style="padding: 10px;">Периодический регистр сведений</td>
+        <td style="padding: 10px;">📂 Гибкая настройка по датам</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Хранит историю изменений</td>
+        <td style="padding: 10px;">Ответственный + комментарий</td>
+        <td style="padding: 10px;">📋 Полный аудит</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Сохраняет совместимость</td>
+        <td style="padding: 10px;">Fallback на константу</td>
+        <td style="padding: 10px;">🚫 Старые документы не ломаются</td>
+    </tr>
+</table>
+
+---
+
+## ⚙️ Основные возможности
+
+### ✅ Управление проверкой по дате документа
+
+При проведении документа «ПереплетВКР» система автоматически:
+
+- Определяет дату документа
+- Запрашивает у регистра «НастройкиПроверкиМатериаловПереплета» последнюю запись с периодом ≤ даты документа
+- Если запись найдена — использует её значение
+- Если записей нет — обращается к константе (fallback)
+- Выполняет проверку остатков только при активной настройке
+
+---
+
+### 📝 Изменение настройки без конфигуратора
+
+Администратор может:
+
+1. Открыть форму списка регистра «НастройкиПроверкиМатериаловПереплета»
+2. Добавить запись с нужной датой и значением «ПроверкаВключена»
+3. Указать комментарий (например, «Включаем проверку с нового квартала»)
+4. Система автоматически зафиксирует ответственного и дату записи
+
+---
+
+### 🛡️ Сохранение совместимости
+
+<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0;">
+
+- 📅 **Старые документы** продолжают проверяться по правилам константы
+- 🔄 **Новые документы** используют актуальное значение из регистра
+- 📋 **Дата константы** автоматически становится первой записью регистра при обновлении
+
+</div>
+
+---
+
+## ⚙️ Настройка проверки материалов
+
+### Сравнение: до и после
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Параметр</th>
+        <th style="background: linear-gradient(135deg, #c62828, #b71c1c); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">До релиза 4.26.38.1</th>
+        <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">После релиза 4.26.38.1</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Источник настройки</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Константа</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Регистр сведений (+ fallback на константу)</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>История изменений</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">❌ Нет</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Полная, с ответственным и комментарием</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Логика применения</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Дата документа ≥ дата константы</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Значение из регистра на дату документа</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Многократное переключение</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">❌ Невозможно</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Да, с привязкой к датам</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Изменение из интерфейса</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Только через форму констант</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Через форму списка регистра</td>
+    </tr>
+</table>
+
+---
+
+### 🛠️ Где задаётся
+
+Регистр доступен в разделе:
+
+> **Администрирование → Настройки проверки материалов → Форма списка регистра «НастройкиПроверкиМатериаловПереплета»**
+
+Константа **«ДатаВключениеПроверкиматериаловВПереплет»** остаётся в конфигурации как **fallback** и используется только при отсутствии записей в регистре. Планируется удаление константы в следующих релизах после полного перехода.
+
+---
+
+### 📊 Схема работы
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│           Определение настройки проверки на дату документа          │
+│                                                                     │
+│  1️⃣  Запрос к регистру «НастройкиПроверкиМатериаловПереплета»       │
+│                                                                     │
+│  2️⃣  Есть запись с периодом ≤ даты документа?                       │
+│      ├─ Да → Возвращаем значение «ПроверкаВключена»                 │
+│      └─ Нет → Переход к шагу 3                                      │
+│                                                                     │
+│  3️⃣  Константа заполнена?                                           │
+│      ├─ Нет → Проверка НЕ выполняется                                │
+│      └─ Да → Дата документа ≥ Дата константы?                       │
+│              ├─ Нет → Проверка НЕ выполняется                        │
+│              └─ Да → Проверка ВЫПОЛНЯЕТСЯ                            │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## ✍️ Заключение
+
+Релиз 4.26.38.1 переводит управление проверкой материалов на **периодический регистр сведений**, обеспечивая:
+
+- ✅ **Гибкость** – включение и выключение проверки в любой момент, с привязкой к датам
+- ✅ **Прозрачность** – видно, кто и когда менял настройку
+- ✅ **Совместимость** – старое значение из константы переносится автоматически
+- ✅ **Чистоту архитектуры** – уход от «заплатки» в виде единственной константы
+
+Система становится более предсказуемой и удобной для администрирования: теперь настройку можно менять без правки конфигурации, а история изменений всегда под рукой.
+
+---
+
 # ⚡ Релиз 4.26.36.1
 
 ## Комплексная система управления материалами для переплета и автоматизация создания заявок на пополнение склада

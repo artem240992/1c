@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 # ⚡ Релиз 4.26.39.1
 
 ## Внедрение системы мониторинга производительности 1С, накопление оповещений и оптимизация расписания регламентных заданий
+=======
+## 🔮 В следующем релизе
+
+### Внедрение системы мониторинга производительности 1С и оптимизация расписания регламентных заданий
+>>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
 
 ---
 
@@ -8,6 +14,7 @@
     <tr>
         <td style="padding: 16px 20px;">
             <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+<<<<<<< HEAD
                 <b style="color: #1a73e8;">⚡Релиз 4.26.39.1</b> — новый общий модуль <b>«МониторингПроизводительности»</b>, 
                 регламентное задание для автоматического сбора метрик журнала регистрации, 
                 а также <b>оптимизация расписания регламентных заданий</b> для снижения нагрузки на сервер.
@@ -23,6 +30,19 @@
             </p>
             <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
                 ✅  Регламентные задания <b>разнесены по времени</b> — тяжёлые операции вынесены в нерабочие часы.
+=======
+                <b style="color: #1a73e8;">⚡ Релиз 4.26.39.1</b> — новый общий модуль <b>«МониторингПроизводительности»</b>, 
+                регламентное задание для автоматического сбора метрик и <b>оптимизация расписания регламентных заданий</b>.
+            </p>
+            <p style="margin: 10px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Ежедневный сбор ошибок, предупреждений и взаимоблокировок из журнала регистрации.
+            </p>
+            <p style="margin: 4px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Накопительная история оповещений — свежий отчёт сверху, старые ниже.
+            </p>
+            <p style="margin: 4px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Регламентные задания разнесены по времени, тяжёлые операции — в нерабочие часы.
+>>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
             </p>
         </td>
     </tr>
@@ -30,6 +50,7 @@
 
 ---
 
+<<<<<<< HEAD
 ## 🎯 Основные цели релиза
 
 <table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
@@ -56,11 +77,36 @@
     <tr>
         <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Чистота архитектуры</b></td>
         <td style="padding: 10px 14px; border: 1px solid #ddd;">Отдельный общий модуль + регламентное задание вместо ручных проверок</td>
+=======
+## 🎯 Что даёт релиз
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Направление</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Результат</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📊 Мониторинг</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Автосбор метрик за текущий день, отчёт в ЖР</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📝 Оповещения</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Накопление истории в существующей записи, без создания новых</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>⏰ Расписание РЗ</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Разнос тяжёлых операций, отказ от избыточных запусков</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>⚡ Производительность</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Снижение пиковой нагрузки, стабильная работа пользователей</td>
+>>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
     </tr>
 </table>
 
 ---
 
+<<<<<<< HEAD
 <table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
     <tr>
         <td style="padding: 16px 20px;">
@@ -79,12 +125,25 @@
                 4. 📝 <b>Запись в ЖР</b> — полный текст отчёта фиксируется в журнале регистрации как информационное событие.</p>
     <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
                 5. 📨 <b>Обновление оповещения</b> — если запись в регистре «Оповещения» уже есть, текст дописывается в неё сверху.</p>
+=======
+## 🔄 Как это работает
+
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 14px 18px;">
+            <b>1.</b> ⏰ РЗ <b>«МониторингПроизводительности»</b> запускается по расписанию<br>
+            <b>2.</b> 📅 Период сбора: <b>НачалоДня</b> — <b>КонецДня</b> текущей даты<br>
+            <b>3.</b> 🔍 Сбор метрик из ЖР (ошибки, предупреждения, взаимоблокировки) + подсчёт РЗ с ошибками<br>
+            <b>4.</b> 📝 Запись отчёта в журнал регистрации<br>
+            <b>5.</b> 📨 Обновление существующего оповещения — новый текст сверху, старый ниже
+>>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
         </td>
     </tr>
 </table>
 
 ---
 
+<<<<<<< HEAD
 ## 🔄 Бизнес-процесс
 
 <table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 16px 20px;"> <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;"> <span style="font-size: 20px;">🔄</span> <b style="color: #1a73e8;">Бизнес-процесс</b> — ежедневный автоматический сбор метрик и обновление единого оповещения для администратора, с сохранением истории. </p> </td> </tr> </table>
@@ -126,11 +185,37 @@
 - 🛑 **Если записи нет** — выходит, ничего не создавая
 - 📝 **Если запись есть** — добавляет новый текст в начало, сохраняя старый ниже под разделителем
 - 🕒 **Шапка с датой** — каждая итерация отмечена датой запуска
+=======
+## ⚙️ Ключевые механизмы
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0;">
+
+<div style="background: #e8f5e9; padding: 14px 18px; border-radius: 8px; border-left: 4px solid #2e7d32;">
+    <b>✅ Обновление без создания</b><br>
+    <span style="font-size: 14px;">Если записи нет — ничего не пишется. Мусор в регистре не плодится.</span>
+</div>
+
+<div style="background: #e3f2fd; padding: 14px 18px; border-radius: 8px; border-left: 4px solid #1565c0;">
+    <b>📝 Текст сверху вниз</b><br>
+    <span style="font-size: 14px;">Свежий отчёт всегда в начале, история — ниже под разделителем.</span>
+</div>
+
+<div style="background: #fff3e0; padding: 14px 18px; border-radius: 8px; border-left: 4px solid #f57c00;">
+    <b>🛡️ Защита от ошибок</b><br>
+    <span style="font-size: 14px;">Сравнение заголовков через ПОДСТРОКА, обработка исключений в ЖР.</span>
+</div>
+
+<div style="background: #f3e5f5; padding: 14px 18px; border-radius: 8px; border-left: 4px solid #6a1b9a;">
+    <b>⏰ Единый график РЗ</b><br>
+    <span style="font-size: 14px;">Тяжёлые операции — ночью и в выходные, без пересечений по времени.</span>
+</div>
+>>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
 
 </div>
 
 ---
 
+<<<<<<< HEAD
 ### ⚙️ Механизм работы
 
 #### 📄 При запуске регламентного задания
@@ -156,11 +241,48 @@
     <tr>
         <td style="padding: 10px;">Ошибка при обновлении</td>
         <td style="padding: 10px;">📝 Запись в журнал регистрации</td>
+=======
+## ⏰ Новое расписание регламентных заданий
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">🕐 Время</th>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">📋 Задания</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Каждые 15 мин</b></td>
+        <td style="padding: 10px;">Обновление доступа на уровне записей, заполнение данных для ограничения доступа</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Утро (07:00)</b></td>
+        <td style="padding: 10px;">Курс валют, контроль активности пользователей</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>День (13:00)</b></td>
+        <td style="padding: 10px;">Проверка обновлений</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Вечер (20:00)</b></td>
+        <td style="padding: 10px;">Перенос актов на следующий день</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Ночь (01:00–03:00)</b></td>
+        <td style="padding: 10px;">Обновление индексов, купоны, акции, отчёты, сбор информации в ЖР</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Выходные / раз в месяц</b></td>
+        <td style="padding: 10px;">Слияние индексов, сворачивание регистров</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Вручную</b></td>
+        <td style="padding: 10px;">Отложенное обновление ИБ, блокировка сеансов</td>
+>>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
     </tr>
 </table>
 
 ---
 
+<<<<<<< HEAD
 ### 🛡️ Защита от лишних записей
 
 <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
@@ -651,11 +773,51 @@
         <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Нагрузка в рабочее время</b></td>
         <td style="padding: 10px 14px; border: 1px solid #ddd;">Пиковая — из-за совпадения тяжёлых заданий</td>
         <td style="padding: 10px 14px; border: 1px solid #ddd;">Равномерная — тяжёлое вынесено в ночь</td>
+=======
+## 📊 Сравнение: до и после
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; padding: 10px;">Параметр</th>
+        <th style="background: linear-gradient(135deg, #c62828, #b71c1c); color: white; padding: 10px;">До</th>
+        <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; padding: 10px;">После</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Сбор метрик</b></td>
+        <td style="padding: 10px;">Вручную</td>
+        <td style="padding: 10px;">Автоматически по РЗ</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>История отчётов</b></td>
+        <td style="padding: 10px;">❌ Нет</td>
+        <td style="padding: 10px;">✅ Накопительный текст</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Пустые записи</b></td>
+        <td style="padding: 10px;">Возможны</td>
+        <td style="padding: 10px;">Исключены</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>Период сбора</b></td>
+        <td style="padding: 10px;">24 часа от момента</td>
+        <td style="padding: 10px;">С начала по конец дня</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Расписание РЗ</b></td>
+        <td style="padding: 10px;">Разрозненное, с пересечениями</td>
+        <td style="padding: 10px;">Единое, без пересечений</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>Нагрузка днём</b></td>
+        <td style="padding: 10px;">Пиковая</td>
+        <td style="padding: 10px;">Равномерная</td>
+>>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
     </tr>
 </table>
 
 ---
 
+<<<<<<< HEAD
 ### 🛠️ Где задаётся
 
 Общий модуль и РЗ доступны в конфигураторе:
@@ -707,6 +869,19 @@
 
 Система даёт администратору постоянную обратную связь о состоянии информационной базы, не засоряя регистр лишними записями и не создавая дубликатов. Расписание регламентных заданий теперь исключает пиковые нагрузки и обеспечивает стабильную работу пользователей в течение всего рабочего дня.
 
+=======
+## ✍️ Итог
+
+<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0; font-size: 15px; line-height: 1.9;">
+
+- ✅ <b>Автоматизация</b> — ежедневный сбор метрик без участия администратора
+- ✅ <b>Прозрачность</b> — все данные фиксируются в журнале регистрации
+- ✅ <b>Накопительная история</b> — отчёты дописываются в существующее оповещение
+- ✅ <b>Отсутствие мусора</b> — новые записи в регистре не создаются
+- ✅ <b>Снижение нагрузки</b> — тяжёлые РЗ вынесены в нерабочее время
+
+</div>
+>>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
 ---
 
 # ⚡ Релиз 4.26.38.1

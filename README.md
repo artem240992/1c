@@ -1,19 +1,13 @@
 # ⚡ Релиз 4.26.39.1
 
 ## Внедрение системы мониторинга производительности 1С, накопление оповещений и оптимизация расписания регламентных заданий
-=======
-## 🔮 В следующем релизе
 
 ### Внедрение системы мониторинга производительности 1С и оптимизация расписания регламентных заданий
->>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
-
----
 
 <table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
     <tr>
         <td style="padding: 16px 20px;">
             <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
-<<<<<<< HEAD
                 <b style="color: #1a73e8;">⚡Релиз 4.26.39.1</b> — новый общий модуль <b>«МониторингПроизводительности»</b>, 
                 регламентное задание для автоматического сбора метрик журнала регистрации, 
                 а также <b>оптимизация расписания регламентных заданий</b> для снижения нагрузки на сервер.
@@ -41,7 +35,6 @@
             </p>
             <p style="margin: 4px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
                 ✅  Регламентные задания разнесены по времени, тяжёлые операции — в нерабочие часы.
->>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
             </p>
         </td>
     </tr>
@@ -49,7 +42,6 @@
 
 ---
 
-<<<<<<< HEAD
 ## 🎯 Основные цели релиза
 
 <table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
@@ -99,13 +91,11 @@
     <tr>
         <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>⚡ Производительность</b></td>
         <td style="padding: 10px 14px; border: 1px solid #ddd;">Снижение пиковой нагрузки, стабильная работа пользователей</td>
->>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
     </tr>
 </table>
 
 ---
 
-<<<<<<< HEAD
 <table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
     <tr>
         <td style="padding: 16px 20px;">
@@ -135,14 +125,12 @@
             <b>3.</b> 🔍 Сбор метрик из ЖР (ошибки, предупреждения, взаимоблокировки) + подсчёт РЗ с ошибками<br>
             <b>4.</b> 📝 Запись отчёта в журнал регистрации<br>
             <b>5.</b> 📨 Обновление существующего оповещения — новый текст сверху, старый ниже
->>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
         </td>
     </tr>
 </table>
 
 ---
 
-<<<<<<< HEAD
 ## 🔄 Бизнес-процесс
 
 <table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 16px 20px;"> <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;"> <span style="font-size: 20px;">🔄</span> <b style="color: #1a73e8;">Бизнес-процесс</b> — ежедневный автоматический сбор метрик и обновление единого оповещения для администратора, с сохранением истории. </p> </td> </tr> </table>
@@ -208,13 +196,11 @@
     <b>⏰ Единый график РЗ</b><br>
     <span style="font-size: 14px;">Тяжёлые операции — ночью и в выходные, без пересечений по времени.</span>
 </div>
->>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
 
 </div>
 
 ---
 
-<<<<<<< HEAD
 ### ⚙️ Механизм работы
 
 #### 📄 При запуске регламентного задания
@@ -275,13 +261,11 @@
     <tr>
         <td style="padding: 10px;"><b>Вручную</b></td>
         <td style="padding: 10px;">Отложенное обновление ИБ, блокировка сеансов</td>
->>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
     </tr>
 </table>
 
 ---
 
-<<<<<<< HEAD
 ### 🛡️ Защита от лишних записей
 
 <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0;">
@@ -810,13 +794,11 @@
         <td style="padding: 10px;"><b>Нагрузка днём</b></td>
         <td style="padding: 10px;">Пиковая</td>
         <td style="padding: 10px;">Равномерная</td>
->>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
     </tr>
 </table>
 
 ---
 
-<<<<<<< HEAD
 ### 🛠️ Где задаётся
 
 Общий модуль и РЗ доступны в конфигураторе:
@@ -880,7 +862,6 @@
 - ✅ <b>Снижение нагрузки</b> — тяжёлые РЗ вынесены в нерабочее время
 
 </div>
->>>>>>> 2b04fe009b7825e38ff6445af56e3523addc64ef
 ---
 
 # ⚡ Релиз 4.26.38.1

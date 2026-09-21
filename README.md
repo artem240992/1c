@@ -1,3 +1,142 @@
+## 🔮 В следующем релизе
+
+### Раздельный учёт материалов переплёта, контроль по размерам скоб, автоматическое формирование заявок, хранение сканов и корректная работа с акциями
+
+---
+
+<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 16px 20px;">
+            <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                <b style="color: #1a73e8;">⚡ Релиз 4.26.40.1</b> — переход на <b>два независимых регистра</b> учёта материалов,
+                учёт <b>скоб по размерам</b>, автоматическое формирование <b>заявок на пополнение</b>,
+                <b>прикрепление сканированных документов</b> к работам и корректная <b>отмена проведения Акций</b>.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+               ✅  Скобы учитываются <b>по каждому размеру отдельно</b> — 7, 10, 12, 15, 20 мм.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Заявка формируется ровно на <b>недостающее до минимума количество</b>.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  К каждой работе можно <b>прикрепить скан-копию</b> прямо в 1С.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Услуги <b>больше не блокируют</b> проведение Акций.
+            </p>
+        </td>
+    </tr>
+</table>
+
+---
+
+## 🎯 Что войдёт в релиз
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Направление</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Что изменится</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📦 Учёт материалов</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Два отдельных регистра: <code>УчетСкобПереплета</code> (с размерами) и <code>УчетПапокПереплета</code></td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📏 Размеры скоб</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Размер вводится построчно в ТЧ <code>Акт</code>, движения разбиваются по каждому размеру</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📨 Автозаявки</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Формируются автоматически при снижении остатка ниже минимума, ровно на недостающее количество</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📎 Сканы документов</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Вкладка «Файлы» в документе <code>ПереплетВКР</code> для прикрепления сканов к работам</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>🎁 Акции</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Проверка остатков только для товаров, услуги не блокируют проведение; корректная отмена проведения</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>🔍 Поиск товаров</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Через реквизит <code>Подвид</code> — независимо от наименования</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>⚙️ Управление</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Проверка и автосоздание заявок включаются/выключаются константой</td>
+    </tr>
+</table>
+
+---
+
+## 📊 Ключевые изменения: до и после
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Параметр</th>
+        <th style="background: linear-gradient(135deg, #c62828, #b71c1c); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Было</th>
+        <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Станет</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Учёт скоб</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Общий</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ По размерам</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Заявка на пополнение</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Фиксированное количество</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ До минимума из константы</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Услуги в акции</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Блокировали проведение</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Проводятся свободно</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Сканы документов</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">❌ Не хранились</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Прикрепляются к работе</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Отмена проведения Акции</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Оставляла записи</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Полная очистка</td>
+    </tr>
+</table>
+
+---
+
+## 📋 Что подготовить к внедрению
+
+- [ ] Создать регистры `УчетСкобПереплета` и `УчетПапокПереплета`
+- [ ] Удалить старый регистр `УчетМатериаловПереплета`
+- [ ] Добавить `РазмерСкобы` и `ОстатокСкоб` в ТЧ `Акт` документа `ПереплетВКР`
+- [ ] Добавить `РазмерСкобы` в ТЧ `Товары` приходной и заявки
+- [ ] Переписать `ОбработкаПроведения`, `ПередЗаписью`, `ПроверитьНизкийОстаток`
+- [ ] Обновить модуль `ЗНПТ`: поиск по `Подвид` + разбор строк с размером
+- [ ] Добавить вкладку «Файлы» в `ПереплетВКР`
+- [ ] Добавить `ОбработкаУдаленияПроведения` в документ `Акция`
+- [ ] Настроить проверку `Тоовары = Истина` и автозаполнение флажка в форме `Акция`
+- [ ] Установить константы: `ВключитьПроверкуНаМинОстатокПереплета`, `МинимумОстатокПереплета`
+- [ ] Убедиться, что реквизит `Подвид` заполнен у товаров-папок и товаров-скоб
+
+---
+
+## ✍️ Что это даст бизнесу
+
+<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0; font-size: 15px; line-height: 1.9;">
+
+- ✅ <b>Точность учёта</b> — скобы учитываются по каждому размеру, невозможно списать «не тот размер»
+- ✅ <b>Автоматизация снабжения</b> — заявки формируются ровно на недостающее количество, без лишних закупок
+- ✅ <b>Гибкость</b> — всю логику проверки и автосоздания можно выключить одной константой
+- ✅ <b>Удобство работы</b> — сканы документов прикреплены прямо к работе в 1С
+- ✅ <b>Надёжность</b> — корректная отмена проведения Акций, отсутствие «зависших» записей
+- ✅ <b>Чистота архитектуры</b> — раздельные регистры, поиск по реквизиту, услуги не мешают проведению
+
+</div>
+
+---
+
 # ⚡ Релиз 4.26.39.1
 
 ## Внедрение системы мониторинга производительности 1С, накопление оповещений и оптимизация расписания регламентных заданий

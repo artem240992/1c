@@ -1,6 +1,6 @@
-## 🔮 В следующем релизе  <b>28.09.2026</b>
+# ⚡ Релиз 4.26.40.1
 
-### Раздельный учёт материалов переплёта, контроль по размерам скоб, автоматическое формирование заявок, хранение сканов и корректная работа с акциями
+## Раздельный учёт материалов переплёта, контроль по размерам скоб, автоматическое формирование заявок, хранение сканов, корректная работа Акций и уведомление об обновлениях
 
 ---
 
@@ -8,15 +8,16 @@
     <tr>
         <td style="padding: 16px 20px;">
             <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
-                <b style="color: #1a73e8;">⚡ Релиз 4.26.40.1</b> — переход на <b>два независимых регистра</b> учёта материалов,
-                учёт <b>скоб по размерам</b>, автоматическое формирование <b>заявок на пополнение</b>,
-                <b>прикрепление сканированных документов</b> к работам и корректная <b>отмена проведения Акций</b>.
+                <b style="color: #1a73e8;">⚡ Релиз 4.26.40.1</b> — крупное обновление учёта материалов переплёта,
+                автоматизации снабжения и работы с документами. Включает <b>раздельные регистры</b>,
+                <b>учёт скоб по размерам</b>, <b>автозаявки на пополнение</b>, <b>хранение сканов</b>,
+                <b>улучшения в Акциях</b> и <b>кнопку проверки обновлений</b>.
             </p>
             <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
-               ✅  Скобы учитываются <b>по каждому размеру отдельно</b> — 7, 10, 12, 15, 20 мм.
+               ✅  Скобы учитываются <b>по каждому размеру отдельно</b>.
             </p>
             <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
-                ✅  Заявка формируется ровно на <b>недостающее до минимума количество</b>.
+                ✅  Заявки на пополнение формируются <b>ровно на недостающее количество</b>.
             </p>
             <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
                 ✅  К каждой работе можно <b>прикрепить скан-копию</b> прямо в 1С.
@@ -24,13 +25,16 @@
             <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
                 ✅  Услуги <b>больше не блокируют</b> проведение Акций.
             </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Появилась кнопка <b>«Проверить обновление»</b> с красивым уведомлением.
+            </p>
         </td>
     </tr>
 </table>
 
 ---
 
-## 🎯 Что войдёт в релиз
+## 🎯 Основные цели релиза
 
 <table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
     <tr>
@@ -39,85 +43,197 @@
     </tr>
     <tr>
         <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📦 Учёт материалов</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Два отдельных регистра: <code>УчетСкобПереплета</code> (с размерами) и <code>УчетПапокПереплета</code></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Два отдельных регистра: скобы (с размерами) и папки</td>
     </tr>
-    <tr style="background: #e8f5e9;">
+    <tr>
         <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📏 Размеры скоб</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Размер вводится построчно в ТЧ <code>Акт</code>, движения разбиваются по каждому размеру</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Размер вводится построчно в ТЧ, движения разбиваются по каждому размеру</td>
     </tr>
     <tr>
         <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📨 Автозаявки</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Формируются автоматически при снижении остатка ниже минимума, ровно на недостающее количество</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Формируются автоматически ровно до минимума из константы</td>
     </tr>
-    <tr style="background: #e8f5e9;">
+    <tr>
         <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>📎 Сканы документов</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Вкладка «Файлы» в документе <code>ПереплетВКР</code> для прикрепления сканов к работам</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Вкладка «Файлы» в документе «ПереплетВКР»</td>
     </tr>
     <tr>
         <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>🎁 Акции</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Проверка остатков только для товаров, услуги не блокируют проведение; корректная отмена проведения</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>🔍 Поиск товаров</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Через реквизит <code>Подвид</code> — независимо от наименования</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Проверка только для товаров, корректная отмена проведения</td>
     </tr>
     <tr>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>⚙️ Управление</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Проверка и автосоздание заявок включаются/выключаются константой</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>🔔 Уведомления</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Кнопка «Проверить обновление» с красивым окном о новой версии</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>⚙️ Гибкость</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Вся логика проверок управляется константами</td>
     </tr>
 </table>
 
 ---
 
-## 📊 Ключевые изменения: до и после
+## 🗄️ Новая структура регистров
 
-<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
     <tr>
-        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Параметр</th>
-        <th style="background: linear-gradient(135deg, #c62828, #b71c1c); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Было</th>
-        <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Станет</th>
+        <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; padding: 12px;">Регистр</th>
+        <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; padding: 12px;">Измерения</th>
+        <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; padding: 12px;">Ресурс</th>
     </tr>
     <tr>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Учёт скоб</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Общий</td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ По размерам</td>
+        <td style="padding: 10px;"><b>УчетСкобПереплета</b></td>
+        <td style="padding: 10px;">Регистратор, Ответственный, <b>РазмерСкобы</b></td>
+        <td style="padding: 10px;">Количество</td>
     </tr>
     <tr style="background: #e8f5e9;">
-        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Заявка на пополнение</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Фиксированное количество</td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ До минимума из константы</td>
-    </tr>
-    <tr>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Услуги в акции</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Блокировали проведение</td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Проводятся свободно</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Сканы документов</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">❌ Не хранились</td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Прикрепляются к работе</td>
-    </tr>
-    <tr>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Отмена проведения Акции</b></td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">Оставляла записи</td>
-        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Полная очистка</td>
+        <td style="padding: 10px;"><b>УчетПапокПереплета</b></td>
+        <td style="padding: 10px;">Регистратор, Ответственный</td>
+        <td style="padding: 10px;">Количество</td>
     </tr>
 </table>
 
----
+<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0;">
 
-## ✍️ Что это даст бизнесу
-
-<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0; font-size: 15px; line-height: 1.9;">
-
-- ✅ <b>Точность учёта</b> — скобы учитываются по каждому размеру, невозможно списать «не тот размер»
-- ✅ <b>Автоматизация снабжения</b> — заявки формируются ровно на недостающее количество, без лишних закупок
-- ✅ <b>Гибкость</b> — всю логику проверки и автосоздания можно выключить одной константой
-- ✅ <b>Удобство работы</b> — сканы документов прикреплены прямо к работе в 1С
-- ✅ <b>Надёжность</b> — корректная отмена проведения Акций, отсутствие «зависших» записей
-- ✅ <b>Чистота архитектуры</b> — раздельные регистры, поиск по реквизиту, услуги не мешают проведению
+Старый регистр <code>УчетМатериаловПереплета</code> с двумя ресурсами — <b>удалён из конфигурации</b>. Учёт ведётся с нуля в новых регистрах.
 
 </div>
+
+---
+
+## 📄 Документ «ПереплетВКР»
+
+### Новые реквизиты в ТЧ «Акт»
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Реквизит</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Тип</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Назначение</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>РазмерСкобы</b></td>
+        <td style="padding: 10px;">Число (5,0)</td>
+        <td style="padding: 10px;">Размер вводится построчно</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>ОстатокСкоб</b></td>
+        <td style="padding: 10px;">Число (10,0)</td>
+        <td style="padding: 10px;">Текущий остаток по размеру</td>
+    </tr>
+</table>
+
+### Изменённые процедуры
+
+- **ОбработкаПроведения** — списание по каждому размеру скобы отдельно
+- **ПередЗаписью** — формирование строки заявки формата `Папка|200;Скоба|10|380`
+- **ПроверитьНизкийОстаток** — предупреждение по каждому размеру
+
+---
+
+## 📦 Документ «ПриходнаяНакладная»
+
+### Новый реквизит в ТЧ «Товары»
+
+| Реквизит | Тип | Назначение |
+|---|---|---|
+| **РазмерСкобы** | Число (5,0) | Размер скобы при поступлении |
+
+### Изменённые процедуры
+
+- **ОбработкаПроведения** — движения по скобам разбиваются по размерам
+- Поиск товаров через реквизит `Подвид`
+
+---
+
+## 📋 Документ «ЗаявкаНаПриходНаСклад»
+
+### Новый реквизит в ТЧ «Товары»
+
+| Реквизит | Тип | Назначение |
+|---|---|---|
+| **РазмерСкобы** | Число (5,0) | Размер скобы в заявке |
+
+---
+
+## 📎 Прикрепление сканированных документов
+
+### Описание функционала
+
+<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0;">
+
+В документе <b>«ПереплетВКР»</b> появилась возможность <b>к каждой работе прикрепить отсканированный документ</b> прямо в 1С.
+
+Файлы хранятся в информационной базе, доступны всем пользователям с правами на документ, не теряются и не требуют отдельных папок на диске.
+
+</div>
+
+### Преимущества
+
+- 📎 Сканы всегда под рукой — файл привязан к документу
+- 💾 Единое хранилище — все документы в базе
+- 🔒 Разграничение доступа по правам на документ
+- 🔍 Полный аудит — видно, кто и когда прикрепил файл
+
+---
+
+## 🎁 Документ «Акция» — корректная работа
+
+### Проблема
+
+При отмене проведения документа «Акция» оставались записи в регистрах, из-за чего повторное проведение падало с ошибкой «Запись с такими ключевыми полями существует».
+
+### Решение
+
+Добавлена процедура **`ОбработкаУдаленияПроведения`**, которая очищает **все движения** по документу:
+
+```bsl
+Процедура ОбработкаУдаленияПроведения(Отказ)
+    Движения.Акция.Очистить();
+    Движения.ТоварныеЗапасы.Очистить();
+    
+    Попытка
+        НаборОчистки = РегистрыСведений.Акция.СоздатьНаборЗаписей();
+        НаборОчистки.Отбор.Документ.Установить(Ссылка);
+        НаборОчистки.Прочитать();
+        НаборОчистки.Очистить();
+        НаборОчистки.Записать();
+    Исключение
+    КонецПопытки;
+КонецПроцедуры
+```
+
+⚙️ Константы
+Константа	Назначение
+ВключитьПроверкуНаМинОстатокПереплета	Включает/выключает логику проверки и автосоздания заявок
+МинимумОстатокПереплета	Минимальный остаток (например, 500)
+ДатаВключениеПроверкиматериаловВПереплет	Дата включения проверки
+🔄 Бизнес-процесс
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 14px 18px;"> <b>1.</b> 📝 Пользователь заполняет документ <b>«ПереплетВКР»</b><br> <b>2.</b> 📏 В каждой строке ТЧ «Акт» указывает <b>размер скобы</b><br> <b>3.</b> 📎 При необходимости прикрепляет <b>сканы документов</b><br> <b>4.</b> 🔍 Система показывает остаток по размеру<br> <b>5.</b> ⚠️ При проведении проверяет достаточность по каждому размеру<br> <b>6.</b> 📊 Если остаток ниже минимума — формируется строка для заявки<br> <b>7.</b> 💬 После записи задаётся вопрос о создании заявки<br> <b>8.</b> 📦 Модуль <b>ЗНПТ</b> создаёт заявку ровно на недостающее количество<br> <b>9.</b> 🔔 При выходе нового релиза пользователь нажимает кнопку и видит уведомление </td> </tr> </table>
+
+
+📊 Сравнение: до и после
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;"> <tr> <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Параметр</th> <th style="background: linear-gradient(135deg, #c62828, #b71c1c); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Было</th> <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Станет</th> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Учёт скоб</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Общий</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ По размерам</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Регистры</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Один с двумя ресурсами</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Два независимых</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Количество в заявке</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Фиксированное (500 шт.)</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ До минимума из константы</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Поиск товаров</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">По наименованию</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ По реквизиту Подвид</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Проверка остатков</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Для всех строк</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Только для товаров</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Услуги в Акции</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Блокировали проведение</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Проводятся свободно</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Отмена проведения Акции</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Оставляла записи</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Полная очистка</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Сканы документов</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">❌ Нет</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Прикрепляются к работе</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Уведомление об обновлении</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">❌ Нет</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Кнопка «Проверить обновление»</td> </tr> </table>
+
+
+✍️ Заключение
+Релиз 4.26.40.1 — крупное обновление, затрагивающее ключевые бизнес-процессы:
+
+✅ Точность учёта — скобы учитываются по каждому размеру
+
+✅ Автоматизация снабжения — заявки формируются ровно на недостающее количество
+
+✅ Гибкость — вся логика управляется константой
+
+✅ Удобство — сканы документов хранятся прямо в 1С
+
+✅ Надёжность — корректная отмена проведения Акций
+
+✅ Прозрачность — красивое уведомление о новых версиях
+
+✅ Чистота архитектуры — раздельные регистры, поиск по реквизиту
+
+Система готова к дальнейшему развитию: аналитика по расходам в разрезе размеров, прогноз закупок, ABC-анализ материалов и электронный архив документов.
 
 ---
 

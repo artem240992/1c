@@ -1,3 +1,103 @@
+## 🔮 В следующем релизе
+
+### Релиз 4.26.42.1 — оптимизация работы с актами и файлами
+
+---
+
+<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 16px 20px;">
+            <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                <b style="color: #1a73e8;">⚡ Релиз 4.26.42.1</b> — комплексное улучшение работы с документом
+                <b>«ПереплетВКР»</b>: отложенная валидация, кнопка проверки акта, управление доступом
+                к проведению и автоматический вынос старых файлов на диск.
+            </p>
+        </td>
+    </tr>
+</table>
+
+---
+
+## 🎯 Что войдёт в релиз
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; padding: 10px;">Направление</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; padding: 10px;">Что изменится</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>🎨 Валидация акта</b></td>
+        <td style="padding: 10px;">Убраны модальные диалоги, добавлена цветовая подсветка проблемных строк</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>📋 Кнопка «Проверить акт»</b></td>
+        <td style="padding: 10px;">Один сводный отчёт по всем проблемам вместо серии диалогов</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>🔐 Доступ к проведению</b></td>
+        <td style="padding: 10px;">Проведение заблокировано до успешной проверки акта</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>💾 Вынос файлов на диск</b></td>
+        <td style="padding: 10px;">Старые сканы старше 2 лет автоматически перемещаются на диск</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>🔄 Восстановление из архива</b></td>
+        <td style="padding: 10px;">Кнопка возврата файла с диска обратно в базу</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>📖 Читаемый текст заявки</b></td>
+        <td style="padding: 10px;">Вопрос о создании ЗНПТ с понятным списком материалов</td>
+    </tr>
+</table>
+
+---
+
+## 📊 Ключевые выгоды
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Что даёт</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Результат</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Комфорт пользователя</b></td>
+        <td style="padding: 10px;">✅ Нет раздражающих диалогов, работа ускоряется</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>Точность данных</b></td>
+        <td style="padding: 10px;">✅ Нельзя провести документ с ошибками в акте</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Контроль размера базы</b></td>
+        <td style="padding: 10px;">✅ Старые файлы уходят на диск, база не пухнет</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>Скорость бэкапов</b></td>
+        <td style="padding: 10px;">✅ Резервное копирование становится быстрее</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Прозрачность</b></td>
+        <td style="padding: 10px;">✅ Все проблемы видны сразу, а не по одной</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>Обратимость</b></td>
+        <td style="padding: 10px;">✅ Любой файл можно вернуть из архива в базу</td>
+    </tr>
+</table>
+
+---
+
+<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0; font-size: 15px; line-height: 1.9;">
+
+📌 Все доработки <b>независимы</b> и внедряются по отдельности. Ориентировочные сроки:
+
+- 🎨 Валидация и кнопка проверки — **1 рабочий день**
+- 💾 Вынос файлов и восстановление — **2–3 рабочих дня** с учётом настройки бэкапов
+
+</div>
+---
+
 # ⚡ Релиз 4.26.40.1
 
 ## Раздельный учёт материалов переплёта, контроль по размерам скоб, автоматическое формирование заявок, хранение сканов, корректная работа Акций и уведомление об обновлениях

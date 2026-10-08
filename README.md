@@ -1,8 +1,10 @@
-<details style="margin: 16px 0; border-left: 5px solid #6a1b9a; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: 8px; padding: 16px 20px;"><summary style="cursor: pointer; font-size: 18px; font-weight: 700; color: #6a1b9a;">&#9670; В следующем релизе 4.26.42.1</summary>
+<div style="margin: 16px 0; padding: 20px 24px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-left: 5px solid #6a1b9a; border-radius: 10px; box-shadow: 0 4px 12px rgba(106, 27, 154, 0.12);">
 
-<div style="margin-top: 16px; padding-top: 12px; border-top: 2px dashed #6a1b9a;">
+<h2 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #6a1b9a;">&#9670; В следующем релизе 4.26.42.1</h2>
 
-<h3 style="margin: 0 0 16px 0; font-size: 16px; color: #2d3748; font-weight: 700;">Комплексное улучшение работы с актами: автосоздание характеристик, валидация, работа с файлами</h3>
+<p style="margin: 0 0 16px 0; font-size: 14px; color: #7e57c2;">Комплексное улучшение работы с актами: автосоздание характеристик, валидация, работа с файлами</p>
+
+<div style="padding-top: 12px; border-top: 2px dashed #6a1b9a;">
 
 <table cellpadding="14" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%; border-collapse: collapse;">
 <tr>
@@ -14,9 +16,7 @@
 </tr>
 </table>
 
-<hr style="border: none; border-top: 2px solid #eaecef; margin: 20px 0;">
-
-<h3 style="margin: 0 0 12px 0; font-size: 16px; color: #2d3748; font-weight: 700;">&#9678; Что войдёт в релиз</h3>
+<h3 style="margin: 20px 0 12px 0; font-size: 16px; color: #2d3748; font-weight: 700;">&#9678; Что войдёт в релиз</h3>
 
 <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
 <tr>
@@ -57,9 +57,7 @@
 </tr>
 </table>
 
-<hr style="border: none; border-top: 2px solid #eaecef; margin: 20px 0;">
-
-<h3 style="margin: 0 0 12px 0; font-size: 16px; color: #2d3748; font-weight: 700;">&#9636; Ключевые выгоды</h3>
+<h3 style="margin: 20px 0 12px 0; font-size: 16px; color: #2d3748; font-weight: 700;">&#9636; Ключевые выгоды</h3>
 
 <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
 <tr>
@@ -92,8 +90,8 @@
 </tr>
 </table>
 
-<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 14px 20px; border-radius: 8px; margin: 12px 0; font-size: 14px; line-height: 1.8;">
-<b>&#9679; Все доработки независимы</b> и внедряются по отдельности. Ориентировочные сроки:
+<div style="background: #ffffff; border-left: 5px solid #4a90d9; padding: 14px 20px; border-radius: 8px; margin: 16px 0 0 0; font-size: 14px; line-height: 1.8;">
+<b style="color: #4a90d9;">&#9679; Все доработки независимы</b> и внедряются по отдельности. Ориентировочные сроки:
 <ul style="margin: 8px 0 0 20px; padding: 0;">
 <li>&#10022; Автосоздание характеристик + массовое заполнение ТипХранения — <b>1 рабочий день</b></li>
 <li>&#9672; Валидация и кнопка проверки — <b>1 рабочий день</b></li>
@@ -103,7 +101,7 @@
 
 </div>
 
-</details>
+</div>
 
 ---
 # ⚡ Релиз 4.26.41.1

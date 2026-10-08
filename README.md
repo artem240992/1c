@@ -1,11 +1,8 @@
-<details style="margin: 16px 0; padding: 16px 20px; border-left: 5px solid #6a1b9a; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: 8px; box-shadow: 0 4px 12px rgba(106, 27, 154, 0.12);">
-<summary style="cursor: pointer; font-size: 18px; font-weight: 700; color: #6a1b9a; padding: 4px 0; list-style: none;">
-🔮 В следующем релизе 4.26.42.1 <span style="font-size: 13px; font-weight: 400; color: #7e57c2;">(развернуть)</span>
-</summary>
+<details style="margin: 16px 0; border-left: 5px solid #6a1b9a; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: 8px; padding: 16px 20px;"><summary style="cursor: pointer; font-size: 18px; font-weight: 700; color: #6a1b9a;">🔮 В следующем релизе 4.26.42.1</summary>
 
 <div style="margin-top: 16px; padding-top: 12px; border-top: 2px dashed #6a1b9a;">
 
-### Комплексное улучшение работы с актами: автосоздание характеристик, валидация, работа с файлами
+### Комплексное улучшение работы с актами
 
 <table cellpadding="14" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
     <tr>
@@ -107,8 +104,6 @@
 - 🆕 Автосоздание характеристик + массовое заполнение ТипХранения — <b>1 рабочий день</b>
 - 🎨 Валидация и кнопка проверки — <b>1 рабочий день</b>
 - 💾 Вынос файлов и восстановление — <b>2–3 рабочих дня</b> с учётом настройки бэкапов
-
-</div>
 
 </div>
 

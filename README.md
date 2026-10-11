@@ -1,3 +1,109 @@
+<div style="margin: 16px 0; padding: 20px 24px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-left: 5px solid #6a1b9a; border-radius: 10px; box-shadow: 0 4px 12px rgba(106, 27, 154, 0.12);">
+
+<h2 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #6a1b9a;">&#9670; В следующем релизе 4.26.42.1</h2>
+
+<p style="margin: 0 0 16px 0; font-size: 14px; color: #7e57c2;">Комплексное улучшение работы с актами: автосоздание характеристик, валидация, работа с файлами</p>
+
+<div style="padding-top: 12px; border-top: 2px dashed #6a1b9a;">
+
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%; border-collapse: collapse;">
+<tr>
+<td style="padding: 14px 18px;">
+<p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+<b style="color: #1a73e8;">&#9889; Релиз 4.26.42.1</b> — крупное обновление работы с документом <b>&laquo;ПереплетВКР&raquo;</b>: <b>автосоздание характеристик номенклатуры с размерами скоб</b>, отложенная валидация, кнопка проверки акта, управление доступом к проведению, автоматический вынос старых файлов на диск и восстановление из архива.
+</p>
+</td>
+</tr>
+</table>
+
+<h3 style="margin: 20px 0 12px 0; font-size: 16px; color: #2d3748; font-weight: 700;">&#9678; Что войдёт в релиз</h3>
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+<tr>
+<th style="background: #4a90d9; color: white; padding: 10px; text-align: left;">Направление</th>
+<th style="background: #4a90d9; color: white; padding: 10px; text-align: left;">Что изменится</th>
+</tr>
+<tr>
+<td style="padding: 10px;"><b>&#10022; Автосоздание характеристик</b></td>
+<td style="padding: 10px;">Характеристики скоб <b>5, 7, 10, 13, 16, 20 мм</b> создаются автоматически при старте системы</td>
+</tr>
+<tr style="background: #e8f5e9;">
+<td style="padding: 10px;"><b>&#9672; Отложенная валидация</b></td>
+<td style="padding: 10px;">Убраны модальные диалоги при правке строк — только цветовая подсветка</td>
+</tr>
+<tr>
+<td style="padding: 10px;"><b>&#9776; Кнопка &laquo;Проверить акт&raquo;</b></td>
+<td style="padding: 10px;">Один сводный отчёт по всем проблемным строкам</td>
+</tr>
+<tr style="background: #e8f5e9;">
+<td style="padding: 10px;"><b>&#9919; Управление доступом</b></td>
+<td style="padding: 10px;">Проведение заблокировано до успешной проверки акта</td>
+</tr>
+<tr>
+<td style="padding: 10px;"><b>&#9921; Вынос файлов на диск</b></td>
+<td style="padding: 10px;">Старые сканы старше 24 месяцев автоматически перемещаются на диск</td>
+</tr>
+<tr style="background: #e8f5e9;">
+<td style="padding: 10px;"><b>&#8635; Восстановление из архива</b></td>
+<td style="padding: 10px;">Кнопка возврата файла с диска обратно в базу</td>
+</tr>
+<tr>
+<td style="padding: 10px;"><b>&#9998; Массовое заполнение ТипХранения</b></td>
+<td style="padding: 10px;">Обработчик обновления проставляет <b>ТипХранения = База</b> у всех старых файлов</td>
+</tr>
+<tr style="background: #e8f5e9;">
+<td style="padding: 10px;"><b>&#9635; Читаемый текст заявки</b></td>
+<td style="padding: 10px;">Вопрос о создании ЗНПТ содержит понятный список материалов</td>
+</tr>
+</table>
+
+<h3 style="margin: 20px 0 12px 0; font-size: 16px; color: #2d3748; font-weight: 700;">&#9636; Ключевые выгоды</h3>
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+<tr>
+<th style="background: #2e7d32; color: white; padding: 10px; text-align: left;">Что даёт</th>
+<th style="background: #2e7d32; color: white; padding: 10px; text-align: left;">Результат</th>
+</tr>
+<tr>
+<td style="padding: 10px;"><b>Автоматизация</b></td>
+<td style="padding: 10px;">&#10003; Характеристики скоб создаются без ручной работы</td>
+</tr>
+<tr style="background: #e8f5e9;">
+<td style="padding: 10px;"><b>Гибкость</b></td>
+<td style="padding: 10px;">&#10003; Список размеров управляется константой</td>
+</tr>
+<tr>
+<td style="padding: 10px;"><b>Комфорт пользователя</b></td>
+<td style="padding: 10px;">&#10003; Нет раздражающих диалогов, работа ускоряется</td>
+</tr>
+<tr style="background: #e8f5e9;">
+<td style="padding: 10px;"><b>Точность данных</b></td>
+<td style="padding: 10px;">&#10003; Нельзя провести документ с ошибками в акте</td>
+</tr>
+<tr>
+<td style="padding: 10px;"><b>Контроль размера базы</b></td>
+<td style="padding: 10px;">&#10003; Старые файлы уходят на диск, база не пухнет</td>
+</tr>
+<tr style="background: #e8f5e9;">
+<td style="padding: 10px;"><b>Обратимость</b></td>
+<td style="padding: 10px;">&#10003; Любой файл можно вернуть из архива в базу</td>
+</tr>
+</table>
+
+<div style="background: #ffffff; border-left: 5px solid #4a90d9; padding: 14px 20px; border-radius: 8px; margin: 16px 0 0 0; font-size: 14px; line-height: 1.8;">
+<b style="color: #4a90d9;">&#9679; Все доработки независимы</b> и внедряются по отдельности. Ориентировочные сроки:
+<ul style="margin: 8px 0 0 20px; padding: 0;">
+<li>&#10022; Автосоздание характеристик + массовое заполнение ТипХранения — <b>1 рабочий день</b></li>
+<li>&#9672; Валидация и кнопка проверки — <b>1 рабочий день</b></li>
+<li>&#9921; Вынос файлов и восстановление — <b>2–3 рабочих дня</b> с учётом настройки бэкапов</li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+---
 # ⚡ Релиз 4.26.41.1
 
 ## Оптимизация работы с актами: отложенная валидация размеров скоб и вынос старых файлов на диск

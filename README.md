@@ -1,107 +1,321 @@
-<div style="margin: 16px 0; padding: 20px 24px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-left: 5px solid #6a1b9a; border-radius: 10px; box-shadow: 0 4px 12px rgba(106, 27, 154, 0.12);">
+# ⚡ Релиз 4.26.42.1
 
-<h2 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #6a1b9a;">&#9670; В следующем релизе 4.26.42.1</h2>
+## Комплексное улучшение работы с актами: автосоздание характеристик, валидация, доступ и работа с файлами
 
-<p style="margin: 0 0 16px 0; font-size: 14px; color: #7e57c2;">Комплексное улучшение работы с актами: автосоздание характеристик, валидация, работа с файлами</p>
+---
 
-<div style="padding-top: 12px; border-top: 2px dashed #6a1b9a;">
-
-<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%; border-collapse: collapse;">
-<tr>
-<td style="padding: 14px 18px;">
-<p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
-<b style="color: #1a73e8;">&#9889; Релиз 4.26.42.1</b> — крупное обновление работы с документом <b>&laquo;ПереплетВКР&raquo;</b>: <b>автосоздание характеристик номенклатуры с размерами скоб</b>, отложенная валидация, кнопка проверки акта, управление доступом к проведению, автоматический вынос старых файлов на диск и восстановление из архива.
-</p>
-</td>
-</tr>
+<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 16px 20px;">
+            <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                <b style="color: #1a73e8;">⚡ Релиз 4.26.42.1</b> — крупное обновление работы с документом
+                <b>«ПереплетВКР»</b>: автоматическое создание характеристик номенклатуры с размерами скоб,
+                отложенная валидация акта, кнопка проверки, управление доступом к проведению,
+                автоматический вынос старых файлов на диск и восстановление из архива.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Характеристики скоб <b>5, 7, 10, 13, 16, 20 мм</b> создаются автоматически.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Пользователь больше не видит назойливых диалогов при правке строк.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Проведение документа заблокировано, пока акт не проверен.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Старые сканы автоматически выносятся на диск, любой файл можно вернуть из архива.
+            </p>
+        </td>
+    </tr>
 </table>
 
-<h3 style="margin: 20px 0 12px 0; font-size: 16px; color: #2d3748; font-weight: 700;">&#9678; Что войдёт в релиз</h3>
+---
+
+## 🎯 Основные цели релиза
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Направление</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Что изменится</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Автосоздание характеристик</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Характеристики скоб 5, 7, 10, 13, 16, 20 мм создаются при старте системы</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Отложенная валидация</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Убраны модальные диалоги при правке строк — только цветовая подсветка</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Кнопка «Проверить акт»</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Один сводный отчёт по всем проблемным строкам</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Управление доступом</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Проведение заблокировано до успешной проверки акта</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Вынос файлов на диск</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Старые сканы старше 24 месяцев автоматически перемещаются на диск</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Восстановление из архива</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Кнопка возврата файла с диска обратно в базу</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Массовое заполнение ТипХранения</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Обработчик обновления проставляет ТипХранения = База у старых файлов</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Читаемый текст заявки</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Вопрос о создании ЗНПТ содержит понятный список материалов</td>
+    </tr>
+</table>
+
+---
+
+## 🆕 Доработка 1. Автосоздание характеристик номенклатуры с размерами скоб
+
+### Проблема
+
+У номенклатуры **«Скоба для переплёта»** должны быть заведены характеристики по всем используемым размерам: **5, 7, 10, 13, 16, 20 мм**. Без них невозможно провести документ с указанием размера, невозможно получить корректный остаток по каждому размеру. Ручное создание — долго и с ошибками.
+
+### Решение
+
+При **старте системы** модуль приложения автоматически проверяет наличие характеристик и создаёт отсутствующие. Никаких ручных действий не требуется.
+
+### Как это работает
+
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 14px 18px;">
+            <b>1.</b> 🚀 Запускается сеанс 1С:Предприятие<br>
+            <b>2.</b> 📞 Модуль приложения вызывает процедуру <code>СоздатьХарактеристикиСкобЕслиНеСозданы()</code><br>
+            <b>3.</b> 🔍 Ищет номенклатуру с <code>Подвид = Скоба</code><br>
+            <b>4.</b> 📋 Читает список размеров из константы <code>РазмерыСкобДляСоздания</code><br>
+            <b>5.</b> ✅ Проверяет, какие характеристики уже есть<br>
+            <b>6.</b> ➕ Создаёт только отсутствующие: «Скоба 5 мм», «Скоба 7 мм» и т. д.<br>
+            <b>7.</b> 📝 Логирует результат в журнал регистрации
+        </td>
+    </tr>
+</table>
+
+### Константа со списком размеров
 
 <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
-<tr>
-<th style="background: #4a90d9; color: white; padding: 10px; text-align: left;">Направление</th>
-<th style="background: #4a90d9; color: white; padding: 10px; text-align: left;">Что изменится</th>
-</tr>
-<tr>
-<td style="padding: 10px;"><b>&#10022; Автосоздание характеристик</b></td>
-<td style="padding: 10px;">Характеристики скоб <b>5, 7, 10, 13, 16, 20 мм</b> создаются автоматически при старте системы</td>
-</tr>
-<tr style="background: #e8f5e9;">
-<td style="padding: 10px;"><b>&#9672; Отложенная валидация</b></td>
-<td style="padding: 10px;">Убраны модальные диалоги при правке строк — только цветовая подсветка</td>
-</tr>
-<tr>
-<td style="padding: 10px;"><b>&#9776; Кнопка &laquo;Проверить акт&raquo;</b></td>
-<td style="padding: 10px;">Один сводный отчёт по всем проблемным строкам</td>
-</tr>
-<tr style="background: #e8f5e9;">
-<td style="padding: 10px;"><b>&#9919; Управление доступом</b></td>
-<td style="padding: 10px;">Проведение заблокировано до успешной проверки акта</td>
-</tr>
-<tr>
-<td style="padding: 10px;"><b>&#9921; Вынос файлов на диск</b></td>
-<td style="padding: 10px;">Старые сканы старше 24 месяцев автоматически перемещаются на диск</td>
-</tr>
-<tr style="background: #e8f5e9;">
-<td style="padding: 10px;"><b>&#8635; Восстановление из архива</b></td>
-<td style="padding: 10px;">Кнопка возврата файла с диска обратно в базу</td>
-</tr>
-<tr>
-<td style="padding: 10px;"><b>&#9998; Массовое заполнение ТипХранения</b></td>
-<td style="padding: 10px;">Обработчик обновления проставляет <b>ТипХранения = База</b> у всех старых файлов</td>
-</tr>
-<tr style="background: #e8f5e9;">
-<td style="padding: 10px;"><b>&#9635; Читаемый текст заявки</b></td>
-<td style="padding: 10px;">Вопрос о создании ЗНПТ содержит понятный список материалов</td>
-</tr>
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Константа</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Тип</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Значение</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>РазмерыСкобДляСоздания</b></td>
+        <td style="padding: 10px;">Строка (100)</td>
+        <td style="padding: 10px;">5,7,10,13,16,20</td>
+    </tr>
 </table>
 
-<h3 style="margin: 20px 0 12px 0; font-size: 16px; color: #2d3748; font-weight: 700;">&#9636; Ключевые выгоды</h3>
+Значение задаётся **без пробелов**, через запятую. Список можно менять прямо в режиме предприятия — код подхватит новые размеры автоматически.
+
+### Что создаётся
 
 <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
-<tr>
-<th style="background: #2e7d32; color: white; padding: 10px; text-align: left;">Что даёт</th>
-<th style="background: #2e7d32; color: white; padding: 10px; text-align: left;">Результат</th>
-</tr>
-<tr>
-<td style="padding: 10px;"><b>Автоматизация</b></td>
-<td style="padding: 10px;">&#10003; Характеристики скоб создаются без ручной работы</td>
-</tr>
-<tr style="background: #e8f5e9;">
-<td style="padding: 10px;"><b>Гибкость</b></td>
-<td style="padding: 10px;">&#10003; Список размеров управляется константой</td>
-</tr>
-<tr>
-<td style="padding: 10px;"><b>Комфорт пользователя</b></td>
-<td style="padding: 10px;">&#10003; Нет раздражающих диалогов, работа ускоряется</td>
-</tr>
-<tr style="background: #e8f5e9;">
-<td style="padding: 10px;"><b>Точность данных</b></td>
-<td style="padding: 10px;">&#10003; Нельзя провести документ с ошибками в акте</td>
-</tr>
-<tr>
-<td style="padding: 10px;"><b>Контроль размера базы</b></td>
-<td style="padding: 10px;">&#10003; Старые файлы уходят на диск, база не пухнет</td>
-</tr>
-<tr style="background: #e8f5e9;">
-<td style="padding: 10px;"><b>Обратимость</b></td>
-<td style="padding: 10px;">&#10003; Любой файл можно вернуть из архива в базу</td>
-</tr>
+    <tr>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Наименование</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Значение характеристики</th>
+    </tr>
+    <tr><td style="padding: 10px;">Скоба 5 мм</td><td style="padding: 10px;">5</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Скоба 7 мм</td><td style="padding: 10px;">7</td></tr>
+    <tr><td style="padding: 10px;">Скоба 10 мм</td><td style="padding: 10px;">10</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Скоба 13 мм</td><td style="padding: 10px;">13</td></tr>
+    <tr><td style="padding: 10px;">Скоба 16 мм</td><td style="padding: 10px;">16</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Скоба 20 мм</td><td style="padding: 10px;">20</td></tr>
 </table>
 
-<div style="background: #ffffff; border-left: 5px solid #4a90d9; padding: 14px 20px; border-radius: 8px; margin: 16px 0 0 0; font-size: 14px; line-height: 1.8;">
-<b style="color: #4a90d9;">&#9679; Все доработки независимы</b> и внедряются по отдельности. Ориентировочные сроки:
-<ul style="margin: 8px 0 0 20px; padding: 0;">
-<li>&#10022; Автосоздание характеристик + массовое заполнение ТипХранения — <b>1 рабочий день</b></li>
-<li>&#9672; Валидация и кнопка проверки — <b>1 рабочий день</b></li>
-<li>&#9921; Вынос файлов и восстановление — <b>2–3 рабочих дня</b> с учётом настройки бэкапов</li>
-</ul>
-</div>
+### Идемпотентность
 
-</div>
+Обработчик **безопасен для повторных запусков**: если характеристика уже есть — не создаётся дубликат. Второй запуск логирует `Создано: 0, Пропущено (уже были): 6`.
 
-</div>
+### Что это даёт
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #c62828; color: white; padding: 10px;">Было</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Стало</th>
+    </tr>
+    <tr><td style="padding: 10px;">Характеристики создаются вручную</td><td style="padding: 10px;">✅ Автоматически при старте системы</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Легко пропустить размер</td><td style="padding: 10px;">✅ Создаются все из константы</td></tr>
+    <tr><td style="padding: 10px;">Опечатки в наименованиях</td><td style="padding: 10px;">✅ Единый шаблон «Скоба N мм»</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">5 минут на характеристику</td><td style="padding: 10px;">✅ Все за 1 секунду</td></tr>
+    <tr><td style="padding: 10px;">Список размеров зашит в код</td><td style="padding: 10px;">✅ Меняется через константу</td></tr>
+</table>
+
+---
+
+## 🎨 Доработка 2. Отложенная валидация размеров скоб
+
+### Проблема
+
+Раньше в форме документа при каждой правке строки могли появляться **модальные диалоги** с предупреждениями. Это замедляет работу, раздражает пользователя и отвлекает от основной задачи.
+
+### Решение
+
+Валидация разделена на **три уровня** — каждый выполняет свою задачу в нужный момент.
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #2e7d32; color: white; padding: 12px;">Уровень</th>
+        <th style="background: #2e7d32; color: white; padding: 12px;">Когда срабатывает</th>
+        <th style="background: #2e7d32; color: white; padding: 12px;">Что делает</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>🎨 Визуальный</b></td>
+        <td style="padding: 10px;">При каждом изменении строки</td>
+        <td style="padding: 10px;">Подсвечивает проблемную строку цветом — <b>без диалогов</b></td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>📋 По кнопке</b></td>
+        <td style="padding: 10px;">Когда пользователь сам нажмёт</td>
+        <td style="padding: 10px;">Показывает <b>один сводный список</b> всех проблем</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>🛡️ Обязательный</b></td>
+        <td style="padding: 10px;">При записи и проведении</td>
+        <td style="padding: 10px;">Блокирует запись с понятным сообщением</td>
+    </tr>
+</table>
+
+### Визуальная подсветка
+
+Три правила условного оформления таблицы `Акт`:
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">Условие</th>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">Оформление</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Размер не указан, но есть потребность в скобах</td>
+        <td style="padding: 10px;">🟧 Светло-оранжевый фон, оранжевый текст</td>
+    </tr>
+    <tr style="background: #fef2f2;">
+        <td style="padding: 10px;">Размер указан, но скоб нет на складе</td>
+        <td style="padding: 10px;">🟥 Светло-красный фон, красный текст</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Остаток меньше требуемого количества</td>
+        <td style="padding: 10px;">🔴 Жирный шрифт, тёмно-оранжевый цвет</td>
+    </tr>
+</table>
+
+---
+
+## 📋 Доработка 3. Кнопка «Проверить акт»
+
+### Как работает
+
+Кнопка проходит по всем строкам табличной части `Акт`, собирает список проблем и показывает **одно** сводное сообщение:
+Найдены проблемы в акте:
+
+• Строка 2: не указан размер скобы
+• Строка 5: скобы 10 мм отсутствуют на складе
+• Строка 7: недостаточно скоб 13 мм: остаток 5, требуется 10
+
+
+Если проблем нет — появляется уведомление «Все строки акта заполнены корректно».
+
+### Проверяемые условия
+
+- Не указан размер скобы при наличии потребности в скобах.
+- Размер указан, но остаток на складе = 0.
+- Остаток меньше требуемого количества.
+
+---
+
+## 🔐 Доработка 4. Управление доступом к проведению
+
+### Логика
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 12px;">Ситуация</th>
+        <th style="background: #4a90d9; color: white; padding: 12px;">Доступность группы</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">Документ открыт, проверка не выполнена</td>
+        <td style="padding: 10px;">🔒 Заблокирована</td>
+    </tr>
+    <tr style="background: #fef2f2;">
+        <td style="padding: 10px;">Проверка выявила проблемы</td>
+        <td style="padding: 10px;">🔒 Заблокирована</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;">Проверка прошла успешно</td>
+        <td style="padding: 10px;">✅ Разблокирована</td>
+    </tr>
+</table>
+
+## 💾 Доработка 5. Вынос старых файлов на диск
+Проблема
+Сканы документов, прикреплённые к работам, накапливаются в базе. За 2–3 года это даёт прирост на 10–50 ГБ, что замедляет резервное копирование и обновление.
+
+Решение
+Раз в месяц ночью регламентное задание находит файлы старше 24 месяцев, записывает их на диск и очищает бинарные данные в базе. Остаётся только ссылка на внешний путь.
+
+
+Как это работает
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 14px 18px;"> <b>1.</b> ⏰ Раз в месяц, ночью, запускается регламентное задание <code>ВыносФайловНаДиск</code><br> <b>2.</b> 📂 Читает путь хранилища и глубину из констант<br> <b>3.</b> 🔍 Ищет файлы, у которых <code>ТипХранения = База</code> и <code>ДатаСоздания + N мес &lt; ТекущаяДата</code><br> <b>4.</b> 📁 Записывает их на диск в структуре <code>Год\Месяц\GUID_ИмяФайла</code><br> <b>5.</b> ✅ Проверяет, что файл успешно записан<br> <b>6.</b> 🧹 Очищает бинарные данные в базе, оставляет ссылку<br> <b>7.</b> 📝 Логирует операцию в журнал регистрации </td> </tr> </table>
+Константы для настройки
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;"> <tr> <th style="background: #4a90d9; color: white; padding: 10px;">Константа</th> <th style="background: #4a90d9; color: white; padding: 10px;">Тип</th> <th style="background: #4a90d9; color: white; padding: 10px;">Значение</th> </tr> <tr> <td style="padding: 10px;"><b>ПутьКХранилищуФайлов</b></td> <td style="padding: 10px;">Строка (500)</td> <td style="padding: 10px;">D:\FileStorage\Переплёты\</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px;"><b>ГлубинаХраненияФайловМесяцев</b></td> <td style="padding: 10px;">Число (5,0)</td> <td style="padding: 10px;">24</td> </tr> </table>
+Новые реквизиты справочника «ХранимыеФайлы»
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;"> <tr> <th style="background: #6a1b9a; color: white; padding: 10px;">Реквизит</th> <th style="background: #6a1b9a; color: white; padding: 10px;">Тип</th> <th style="background: #6a1b9a; color: white; padding: 10px;">Назначение</th> </tr> <tr> <td style="padding: 10px;"><b>ТипХранения</b></td> <td style="padding: 10px;">ПеречислениеСсылка.ТипХраненияФайлов</td> <td style="padding: 10px;">База или Диск</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px;"><b>ВнешнийПуть</b></td> <td style="padding: 10px;">Строка (500)</td> <td style="padding: 10px;">Путь к файлу на диске</td> </tr> <tr> <td style="padding: 10px;"><b>ДатаВыноса</b></td> <td style="padding: 10px;">Дата</td> <td style="padding: 10px;">Когда файл был вынесен</td> </tr> </table>
+Перечисление «ТипХраненияФайлов»
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;"> <tr> <th style="background: #2e7d32; color: white; padding: 10px;">Значение</th> <th style="background: #2e7d32; color: white; padding: 10px;">Описание</th> </tr> <tr><td style="padding: 10px;">База</td><td style="padding: 10px;">Файл хранится в базе</td></tr> <tr style="background: #e8f5e9;"><td style="padding: 10px;">Диск</td><td style="padding: 10px;">Файл вынесен на диск, в базе только ссылка</td></tr> </table>
+
+## 🔄 Доработка 6. Восстановление файла из архива
+Как работает
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 14px 18px;"> <b>1.</b> 📂 Открыть документ «ПереплетВКР», закладка «Файлы»<br> <b>2.</b> 🖱️ Выбрать строку с файлом<br> <b>3.</b> 🔄 Нажать «Восстановить из архива»<br> <b>4.</b> ✅ Подтвердить действие<br> <b>5.</b> 💾 Файл читается с диска и записывается обратно в базу </td> </tr> </table>
+После восстановления:
+
+ТипХранения → База
+
+ВнешнийПуть → очищается
+
+ДатаВыноса → очищается
+
+## Доработка 7. Читаемый текст заявки
+Проблема:
+
+"При формировании заявки на пополнение пользователь видел техническую строку вида Папка|42;Скоба|1 "-  неинформативно
+
+Решение
+Материалы для переплёта опустились ниже минимума:
+  • Папки — 42 шт.
+  • Скобы 7 мм — 1 шт.
+
+Создать заявку на пополнение склада?
+
+📊 Сравнение: до и после
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;"> <tr> <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Параметр</th> <th style="background: linear-gradient(135deg, #c62828, #b71c1c); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Было</th> <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Станет</th> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Характеристики скоб</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Создаются вручную</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Автоматически при старте</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Список размеров</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Зашит в код</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Управляется константой</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Валидация акта</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Диалог на каждое изменение</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Цвет + кнопка проверки</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Проведение</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Возможно с ошибками</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Заблокировано до проверки</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Хранение файлов</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Всё в базе</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Старше 24 мес — на диске</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Рост базы</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Лавинообразный</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Под контролем</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Резервное копирование</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Долгое (гигабайты)</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Быстрое + отдельно файлы</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Восстановление файла</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">—</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Кнопка «Восстановить из архива»</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Текст заявки</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Технический</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Читаемый</td> </tr> </table>
+
+✍️ Заключение
+Релиз 4.26.42.1 — это комплексное улучшение работы с документом «ПереплетВКР»:
+
+✅ Автоматизация — характеристики скоб создаются при старте системы без ручной работы
+
+✅ Гибкость — список размеров управляется константой, без правок кода
+
+✅ Комфорт — пользователь больше не отвлекается на модальные диалоги
+
+✅ Точность — проведение заблокировано до успешной проверки акта
+
+✅ Наглядность — проблемные строки подсвечены цветом
+
+✅ Стабильность базы — старые файлы автоматически выносятся на диск
+
+✅ Обратимость — файл можно вернуть из архива одной кнопкой
+
+✅ Информативность — вопрос о заявке содержит читаемый список материалов
 
 ---
 # ⚡ Релиз 4.26.41.1

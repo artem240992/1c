@@ -1,3 +1,471 @@
+# ⚡ Релиз 4.26.43.1
+
+## Контроль времени жизни сеансов: автоматическое завершение, предупреждение и гибкие настройки
+
+---
+
+<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 16px 20px;">
+            <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                <b style="color: #1a73e8;">⚡ Релиз 4.26.43.1</b> — внедрение механизма автоматического
+                завершения пользовательских сеансов по истечении заданного лимита времени.
+                Теперь администратор может управлять временем непрерывной работы в программе,
+                освобождать «зависшие» лицензии и снижать нагрузку на сервер —
+                <b>без прав кластера</b> и <b>без изменения типовой конфигурации</b>.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Сеансы закрываются автоматически по истечении лимита.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Пользователь получает предупреждение за N минут до завершения.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Все настройки вынесены в константы, меняются без правки кода.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Список исключений защищает администраторов от принудительного завершения.
+            </p>
+        </td>
+    </tr>
+</table>
+
+---
+
+## 🎯 Основные цели релиза
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Направление</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Что изменится</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Автоматическое завершение</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Сеансы закрываются по истечении лимита (по умолчанию 8 часов)</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Предупреждение пользователя</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">За N минут до завершения — ненавязчивое оповещение</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Гибкая настройка</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Все параметры вынесены в константы</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Список исключений</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Администраторы и отдельные пользователи не завершаются</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Автоинициализация</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">При обновлении конфигурации настройки заполняются автоматически</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Логирование</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Старт и завершение сеансов фиксируются в журнале регистрации</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Интеграция с БСП</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">При принудительном завершении проверки БСП пропускаются</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Безопасность</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Время берётся с сервера (UTC), клиент не может его подделать</td>
+    </tr>
+</table>
+
+---
+
+## 🆕 Доработка 1. Автоматическое завершение сеансов
+
+### Проблема
+
+Пользователи оставляют открытые сеансы на ночь, в выходные, в отпуске. Лицензии «висят», нагрузка на сервер растёт, а администратору приходится вручную завершать сеансы через консоль кластера.
+
+### Решение
+
+Каждый сеанс самостоятельно отслеживает своё время жизни. По истечении лимита клиент **штатно закрывается** — с сохранением данных и освобождением ресурсов. Никаких прав кластера не требуется.
+
+### Как это работает
+
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 14px 18px;">
+            <b>1.</b> 🚀 Запускается сеанс 1С:Предприятие<br>
+            <b>2.</b> 📞 Модуль приложения подключает обработчик ожидания с периодом из константы<br>
+            <b>3.</b> ⏱ Обработчик периодически проверяет, не истёк ли лимит<br>
+            <b>4.</b> ⚠️ За N минут до завершения показывает предупреждение<br>
+            <b>5.</b> 🛑 По истечении лимита вызывает <code>ЗавершитьРаботуСистемы</code> — сеанс закрывается
+        </td>
+    </tr>
+</table>
+
+### Настройки
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Константа</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Тип</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Назначение</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">По умолчанию</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>ВремяЖизниСеансаЧасов</b></td>
+        <td style="padding: 10px;">Число (3,0)</td>
+        <td style="padding: 10px;">Лимит времени жизни сеанса (часы)</td>
+        <td style="padding: 10px;">8</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>Сеанс_ПредупреждатьЗаМинут</b></td>
+        <td style="padding: 10px;">Число (3,0)</td>
+        <td style="padding: 10px;">За сколько минут предупреждать</td>
+        <td style="padding: 10px;">5</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Сеанс_ПериодПроверкиСекунд</b></td>
+        <td style="padding: 10px;">Число (5,0)</td>
+        <td style="padding: 10px;">Период проверки (секунды)</td>
+        <td style="padding: 10px;">60</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>Сеанс_ИсключенияПользователей</b></td>
+        <td style="padding: 10px;">Строка (500)</td>
+        <td style="padding: 10px;">Список пользователей через запятую</td>
+        <td style="padding: 10px;">Администратор</td>
+    </tr>
+</table>
+
+> 💡 `ВремяЖизниСеансаЧасов = 0` полностью отключает механизм.
+
+### Что это даёт
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #c62828; color: white; padding: 10px;">Было</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Стало</th>
+    </tr>
+    <tr><td style="padding: 10px;">Сеансы висят сутками</td><td style="padding: 10px;">✅ Закрываются через 8 часов</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Ручное завершение через кластер</td><td style="padding: 10px;">✅ Автоматически, без прав кластера</td></tr>
+    <tr><td style="padding: 10px;">Лицензии заняты «мёртвыми» сеансами</td><td style="padding: 10px;">✅ Освобождаются</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Нагрузка на сервер растёт</td><td style="padding: 10px;">✅ Снижается</td></tr>
+</table>
+
+---
+
+## 🎨 Доработка 2. Предупреждение пользователя
+
+### Проблема
+
+Резкое завершение сеанса без предупреждения приводит к потере несохранённых данных и раздражению пользователей.
+
+### Решение
+
+За N минут до завершения показывается **ненавязчивое оповещение**, которое не блокирует интерфейс, не мешает работе и показывается **один раз** за сеанс.
+
+### Как это работает
+
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 14px 18px;">
+            <b>1.</b> ⏱ Обработчик определяет, что до завершения осталось N минут<br>
+            <b>2.</b> 💬 Вызывает асинхронный <code>ПоказатьПредупреждение</code> с <code>ОписаниеОповещения</code><br>
+            <b>3.</b> 👤 Пользователь видит сообщение, но может продолжать работу<br>
+            <b>4.</b> 🛑 Через N минут сеанс закрывается
+        </td>
+    </tr>
+</table>
+
+### Что это даёт
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #c62828; color: white; padding: 10px;">Было</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Стало</th>
+    </tr>
+    <tr><td style="padding: 10px;">Сеанс закрывается внезапно</td><td style="padding: 10px;">✅ За 5 минут появляется предупреждение</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Пользователь теряет данные</td><td style="padding: 10px;">✅ Успевает сохранить</td></tr>
+    <tr><td style="padding: 10px;">Модальное окно блокирует работу</td><td style="padding: 10px;">✅ Асинхронное оповещение не мешает</td></tr>
+</table>
+
+---
+
+## 🔐 Доработка 3. Управление доступом и список исключений
+
+### Проблема
+
+Администраторы и некоторые ключевые сотрудники должны работать без ограничений. Завершать их сеансы нельзя.
+
+### Решение
+
+Список исключений задаётся через константу `Сеанс_ИсключенияПользователей`. Пользователи из списка не завершаются и не получают предупреждений.
+
+### Настройка
+
+```
+Все функции → Константы → Сеанс_ИсключенияПользователей
+Значение: Администратор, Директор, Иванов
+```
+
+### Что это даёт
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #c62828; color: white; padding: 10px;">Было</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Стало</th>
+    </tr>
+    <tr><td style="padding: 10px;">Все пользователи равны</td><td style="padding: 10px;">✅ Гибкое управление доступом</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Администратор тоже завершается</td><td style="padding: 10px;">✅ Исключён из механизма</td></tr>
+    <tr><td style="padding: 10px;">Нужно менять код</td><td style="padding: 10px;">✅ Список меняется через константу</td></tr>
+</table>
+
+---
+
+## ⚙️ Доработка 4. Автоматическая инициализация настроек
+
+### Проблема
+
+При обновлении конфигурации новые константы пусты. Пользователю приходится заполнять их вручную, а если он забудет — механизм не работает.
+
+### Решение
+
+Обработчик обновления БСП автоматически заполняет константы значениями по умолчанию при первом запуске после обновления.
+
+### Как это работает
+
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 14px 18px;">
+            <b>1.</b> 🔄 Обновляется конфигурация базы данных<br>
+            <b>2.</b> 📞 БСП запускает обработчик <code>Сеанс_Обновление.ОбновлениеИнформационнойБазы</code><br>
+            <b>3.</b> 🔍 Проверяется версия настроек — если пуста, заполняются все константы<br>
+            <b>4.</b> 💾 Версия сохраняется, чтобы при следующем обновлении не перезаписывать пользовательские значения
+        </td>
+    </tr>
+</table>
+
+### Что это даёт
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #c62828; color: white; padding: 10px;">Было</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Стало</th>
+    </tr>
+    <tr><td style="padding: 10px;">Константы пусты после обновления</td><td style="padding: 10px;">✅ Заполняются автоматически</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Нужно вручную настраивать</td><td style="padding: 10px;">✅ Работает «из коробки»</td></tr>
+    <tr><td style="padding: 10px;">Можно забыть заполнить</td><td style="padding: 10px;">✅ Механизм сам напомнит через журнал</td></tr>
+</table>
+
+---
+
+## 📝 Доработка 5. Логирование событий
+
+### Проблема
+
+Администратор не видит, кто и когда был завершён, и почему.
+
+### Решение
+
+Все ключевые события записываются в журнал регистрации:
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Событие</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Когда пишется</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>ЗавершениеСеансов.ИнициализацияНастроек</b></td>
+        <td style="padding: 10px;">Первичное заполнение констант</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>ЗавершениеСеансов.СтартСеанса</b></td>
+        <td style="padding: 10px;">Запуск сеанса</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>ЗавершениеСеансов.Самозавершение</b></td>
+        <td style="padding: 10px;">Завершение сеанса пользователя</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>ЗавершениеСеансов.КорректировкаНастроек</b></td>
+        <td style="padding: 10px;">Исправление некорректных значений</td>
+    </tr>
+</table>
+
+### Что это даёт
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #c62828; color: white; padding: 10px;">Было</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Стало</th>
+    </tr>
+    <tr><td style="padding: 10px;">Нет информации о завершениях</td><td style="padding: 10px;">✅ Полная история в журнале</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Невозможно проанализировать</td><td style="padding: 10px;">✅ Видно, кто и когда завершён</td></tr>
+    <tr><td style="padding: 10px;">Ошибки настроек не видны</td><td style="padding: 10px;">✅ Фиксируются отдельно</td></tr>
+</table>
+
+---
+
+## 🛡 Защита от нежелательного поведения
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">Риск</th>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">Защита</th>
+    </tr>
+    <tr><td style="padding: 10px;">Потеря данных при завершении</td><td style="padding: 10px;">Штатный механизм <code>ЗавершитьРаботуСистемы</code></td></tr>
+    <tr style="background: #fef2f2;"><td style="padding: 10px;">Блокировка завершения БСП</td><td style="padding: 10px;">Флаг <code>ПринудительноеЗавершение</code> обходит проверки</td></tr>
+    <tr><td style="padding: 10px;">Блокировка модальными окнами</td><td style="padding: 10px;">Асинхронный <code>ПоказатьПредупреждение</code></td></tr>
+    <tr style="background: #fef2f2;"><td style="padding: 10px;">Спам предупреждений</td><td style="padding: 10px;">Флаг <code>ПредупреждениеПоказано</code></td></tr>
+    <tr><td style="padding: 10px;">Перезапись времени старта</td><td style="padding: 10px;">Проверка «уже установлено»</td></tr>
+    <tr style="background: #fef2f2;"><td style="padding: 10px;">Слишком частые проверки</td><td style="padding: 10px;">Минимум 10 секунд</td></tr>
+    <tr><td style="padding: 10px;">Смена часового пояса</td><td style="padding: 10px;"><code>ТекущаяУниверсальнаяДата()</code> на сервере</td></tr>
+    <tr style="background: #fef2f2;"><td style="padding: 10px;">Смена системного времени клиентом</td><td style="padding: 10px;">Время берётся с сервера</td></tr>
+    <tr><td style="padding: 10px;">Завершение админа</td><td style="padding: 10px;">Список исключений</td></tr>
+    <tr style="background: #fef2f2;"><td style="padding: 10px;">Ошибки настроек при обновлении</td><td style="padding: 10px;"><code>Попытка...Исключение</code>, не блокирует запуск</td></tr>
+</table>
+
+---
+
+## ⚠️ Ограничения
+
+### Не завершает
+
+- ❌ COM-соединения.
+- ❌ Фоновые задания.
+- ❌ Сеансы через `1cv8.exe /C"..."` (планировщик).
+- ❌ Пользователей из списка исключений.
+
+### Работает только для
+
+- ✅ Тонкий клиент.
+- ✅ Толстый клиент (управляемое приложение).
+- ✅ Толстый клиент (обычное приложение).
+
+### Прочее
+
+- Мобильный клиент **не поддерживается** (требуется исключение через `#Если Не МобильноеПриложениеСервер`).
+- Продление сеанса не предусмотрено (решается через список исключений).
+- Режим совместимости должен быть **8.3.13+**.
+
+---
+
+## 📊 Сравнение: до и после
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Параметр</th>
+        <th style="background: linear-gradient(135deg, #c62828, #b71c1c); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Было</th>
+        <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Станет</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Завершение сеансов</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Вручную через кластер</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Автоматически по лимиту</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Права кластера</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Требуются</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Не требуются</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Предупреждение</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Отсутствует</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ За N минут</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Список исключений</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Нет</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Через константу</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Настройка</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">В коде</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ В константах</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Инициализация</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Вручную</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Автоматически при обновлении</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Логирование</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Нет</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Журнал регистрации</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Блокировка БСП</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Мешает завершению</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Обходится флагом</td>
+    </tr>
+</table>
+
+---
+
+
+## 📊 Совместимость
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Компонент</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Версия</th>
+    </tr>
+    <tr><td style="padding: 10px;">Платформа 1С:Предприятие</td><td style="padding: 10px;"><b>8.3.13+</b></td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Режим совместимости конфигурации</td><td style="padding: 10px;"><b>8.3.13+</b></td></tr>
+    <tr><td style="padding: 10px;">БСП</td><td style="padding: 10px;"><b>3.1+</b></td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Режим работы</td><td style="padding: 10px;">Клиент-серверный, файловый</td></tr>
+    <tr><td style="padding: 10px;">Мобильная платформа</td><td style="padding: 10px;">❌ Не поддерживается</td></tr>
+</table>
+
+---
+
+## 📝 Состав изменений
+
+### Добавлено
+
+- `5` констант: `ВремяЖизниСеансаЧасов`, `Сеанс_ПредупреждатьЗаМинут`, `Сеанс_ПериодПроверкиСекунд`, `Сеанс_ИсключенияПользователей`, `Сеанс_ВерсияОбработки`.
+- `1` параметр сеанса: `ВремяСтартаСеанса`.
+- `2` общих модуля: `УправлениеСеансамиСервер`, `Сеанс_Обновление`.
+- `3` процедуры в модуле приложения: `ИнициализироватьКонтрольСеанса`, `КонтрольВремениСеанса`, `ПослеЗакрытияПредупреждения`.
+- `1` обработчик обновления БСП (версия `1.0.0.1`).
+
+### Изменено
+
+- Модуль сеанса: добавлена инициализация `ВремяСтартаСеанса` (UTC).
+- Модуль управляемого приложения: `ПриНачалеРаботыСистемы`, `ПередЗавершениемРаботыСистемы`.
+- `ОбновлениеИнформационнойБазыПереопределяемый`: регистрация обработчика.
+
+### Исправлено
+
+- Раскомментирована переменная `ПараметрыПриложения` (без неё не работала БСП).
+- Устранено дублирование вызовов `ПодключитьОбработчикОжидания`.
+- Устранён конфликт локального и универсального времени.
+- Заменено синхронное `ПоказатьПредупреждение` на асинхронное с `ОписаниеОповещения`.
+
+---
+
+## ✍️ Заключение
+
+Релиз **4.26.43.1** — это полноценный механизм контроля времени жизни сеансов:
+
+✅ **Автоматизация** — сеансы закрываются без участия администратора
+
+✅ **Гибкость** — все параметры в константах, без правки кода
+
+✅ **Безопасность** — время с сервера, клиент не влияет
+
+✅ **Комфорт** — предупреждение за N минут, без блокировки
+
+✅ **Прозрачность** — все события в журнале регистрации
+
+✅ **Совместимость** — работает с БСП, не требует прав кластера
+
+✅ **Простота установки** — обновить конфигурацию и заполнить константы
+
+---
+
+## 📞 Поддержка
+
+По вопросам работы механизма, доработки или расширения функциональности обращаться к разработчику.
+
+
 # ⚡ Релиз 4.26.42.1
 
 ## Комплексное улучшение работы с актами: автосоздание характеристик, валидация, доступ и работа с файлами

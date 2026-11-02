@@ -1,93 +1,313 @@
 ##  Что в следующем релизе 4.26.45.1
+
 ## Внедрение механизма безопасных миграций данных: история версий, управление обновлениями и защита от сбоев
 
 ---
 
+<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 16px 20px;">
+            <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                <b style="color: #1a73e8;">⚡ Релиз 4.26.45.1</b> — крупное архитектурное обновление, внедряющее
+                <b>полноценный движок миграций данных</b>. Теперь обновление структуры баз данных
+                и заполнение новых полей происходят <b>безопасно</b>, <b>прозрачно</b> и
+                <b>без участия разработчика в ручном режиме</b>.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Каждая миграция выполняется в <b>изолированной транзакции</b> — при ошибке база не ломается.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Вся история обновлений и ошибок фиксируется в <b>новом регистре версий</b>.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Появился <b>режим проверки (Dry-run)</b> и удобная <b>обработка администратора</b>.
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;">
+                ✅  Реализован <b>бесшовный переход</b> со старой системы версионирования (через константу) на новую.
+            </p>
+        </td>
+    </tr>
+</table>
 
-<table cellpadding="16" cellspacing="0" style="border-left: 5px solid #4a90d9; background: #f8fafc; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 16px 20px;"> <p style="margin: 0; font-size: 15px; line-height: 1.8; color: #2d3748;"> <b style="color: #1a73e8;">⚡ Релиз 4.26.45.1</b> — крупное архитектурное обновление, внедряющее <b>полноценный движок миграций данных</b>. Теперь обновление структуры баз данных и заполнение новых полей происходят <b>безопасно</b>, <b>прозрачно</b> и <b>без участия разработчика в ручном режиме</b>. </p> <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;"> ✅ Каждая миграция выполняется в <b>изолированной транзакции</b> — при ошибке база не ломается. </p> <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;"> ✅ Вся история обновлений и ошибок фиксируется в <b>регистре версий</b>. </p> <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;"> ✅ Появился <b>режим проверки (Dry-run)</b> и удобная <b>обработка администратора</b>. </p> <p style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.8; color: #2d3748;"> ✅ Реализован <b>бесшовный переход</b> со старой системы версионирования (через константу) на новую. </p> </td> </tr> </table>
+
+---
+
 ## 🎯 Основные цели релиза
-<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;"> <tr> <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Направление</th> <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Что изменится</th> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Автоматизация обновлений</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Миграции применяются по клику, без написания разовых скриптов</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Безопасность данных</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Откат транзакции при любой ошибке — данные не остаются «наполовину обновлёнными»</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Прозрачность</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Аудит всех миграций, дат, времени выполнения и ошибок в регистре</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Обратная совместимость</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Старые базы подхватывают новую систему без потери данных</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Удобство администрирования</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Интерфейс проверки и применения миграций с понятным логом</td> </tr> </table>
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Направление</th>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Что изменится</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Автоматизация обновлений</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Миграции применяются по клику, без написания разовых скриптов</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Безопасность данных</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Откат транзакции при любой ошибке — данные не остаются «наполовину обновлёнными»</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Прозрачность</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Аудит всех миграций, дат, времени выполнения и ошибок в регистре</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Обратная совместимость</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Старые базы подхватывают новую систему без потери данных</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Удобство администрирования</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Интерфейс проверки и применения миграций с понятным логом</td>
+    </tr>
+</table>
+
+---
+
 ## 🆕 Доработка 1. Движок миграций и новый регистр версий
-## Проблема
+
+### Проблема
 Раньше для обновления структуры данных (например, при добавлении новых измерений в настройки или переводе данных из констант в регистры) приходилось писать одноразовые скрипты. Если такой скрипт падал посередине, база оставалась в неконсистентном состоянии, а отследить, какая версия обновления применена, было невозможно.
 
-## Решение
-Создан централизованный механизм, который хранит историю обновлений в новом регистре Механизм_Версии и применяет миграции строго по порядку.
+### Решение
+Создан централизованный механизм, который хранит историю обновлений в новом регистре `Механизм_Версии` и применяет миграции строго по порядку. Каждая миграция «заворачивается» в свою транзакцию.
 
-## Как это работает
-<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;"> <tr> <td style="padding: 14px 18px;"> <b>1.</b> 🚀 Администратор открывает обработку управления миграциями<br> <b>2.</b> 🔍 Система сравнивает текущую версию из регистра с реестром миграций<br> <b>3.</b> 📋 Формируется список того, что нужно применить (Dry-run)<br> <b>4.</b> 🔄 Каждая миграция запускается в изолированной транзакции<br> <b>5.</b> ✅ При успехе версия фиксируется в регистре, при ошибке — откат транзакции и запись в лог </td> </tr> </table>
-Настройки и структура регистра
-<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;"> <tr> <th style="background: #4a90d9; color: white; padding: 10px;">Измерение / Ресурс</th> <th style="background: #4a90d9; color: white; padding: 10px;">Тип</th> <th style="background: #4a90d9; color: white; padding: 10px;">Назначение</th> </tr> <tr> <td style="padding: 10px;"><b>ИмяМеханизма</b></td> <td style="padding: 10px;">Строка (100), Измерение</td> <td style="padding: 10px;">Идентификатор модуля (Сеанс, Файлы, Акты)</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px;"><b>Версия</b></td> <td style="padding: 10px;">Строка (20), Измерение</td> <td style="padding: 10px;">Версия применённой миграции</td> </tr> <tr> <td style="padding: 10px;"><b>Статус</b></td> <td style="padding: 10px;">Строка (20), Ресурс</td> <td style="padding: 10px;">Применена / Ошибка</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px;"><b>ДатаПрименения, ДлительностьСек, ТекстОшибки</b></td> <td style="padding: 10px;">Дата, Число, Строка</td> <td style="padding: 10px;">Метрики выполнения и отладка</td> </tr> </table>
+### Как это работает
+
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 14px 18px;">
+            <b>1.</b> 🚀 Администратор открывает обработку управления миграциями<br>
+            <b>2.</b> 🔍 Система сравнивает текущую версию из регистра с реестром миграций<br>
+            <b>3.</b> 📋 Формируется список того, что нужно применить (Dry-run)<br>
+            <b>4.</b> 🔄 Каждая миграция запускается в изолированной транзакции<br>
+            <b>5.</b> ✅ При успехе версия фиксируется в регистре, при ошибке — откат транзакции и запись в лог
+        </td>
+    </tr>
+</table>
+
+### Настройки и структура регистра
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Измерение / Ресурс</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Тип</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Назначение</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>ИмяМеханизма</b></td>
+        <td style="padding: 10px;">Строка (100), Измерение</td>
+        <td style="padding: 10px;">Идентификатор модуля (Сеанс, Файлы, Акты)</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>Версия</b></td>
+        <td style="padding: 10px;">Строка (20), Измерение</td>
+        <td style="padding: 10px;">Версия применённой миграции</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px;"><b>Статус</b></td>
+        <td style="padding: 10px;">Строка (20), Ресурс</td>
+        <td style="padding: 10px;">Применена / Ошибка</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px;"><b>ДатаПрименения, ДлительностьСек, ТекстОшибки</b></td>
+        <td style="padding: 10px;">Дата, Число, Строка</td>
+        <td style="padding: 10px;">Метрики выполнения и отладка</td>
+    </tr>
+</table>
+
+### Что это даёт
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #c62828; color: white; padding: 10px;">Было</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Стало</th>
+    </tr>
+    <tr><td style="padding: 10px;">Ручные скрипты обновления</td><td style="padding: 10px;">✅ Автоматизированный движок</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Риск поломки базы при сбое</td><td style="padding: 10px;">✅ Транзакции и откаты</td></tr>
+    <tr><td style="padding: 10px;">Нет истории версий</td><td style="padding: 10px;">✅ Полный аудит в регистре</td></tr>
+</table>
+
+---
+
 ## 🎨 Доработка 2. Обработка «Механизм управления миграциями»
-Описание функционала
-<div style="background: #f0f7ff; border-left: 5px solid #4a90d9; padding: 16px 20px; border-radius: 8px; margin: 12px 0;">
+
+### Проблема
+Без визуального интерфейса администратору было бы сложно понять, какие миграции ожидают применения, и какие уже выполнены. Ошибки при обновлении было бы тяжело отследить.
+
+### Решение
 Создан удобный инструмент администратора, позволяющий управлять обновлениями базы без правки кода и без Конфигуратора.
 
-</div>
-Преимущества
-## 📊 Наглядность — верхняя таблица показывает текущие версии всех механизмов.
+### Как это работает
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 14px 18px;">
+            <b>1.</b> 📊 Верхняя таблица показывает текущие версии всех механизмов<br>
+            <b>2.</b> 🔍 Кнопка «Проверить» (Dry-run) показывает список планируемых миграций до их запуска<br>
+            <b>3.</b> 🚀 Кнопка «Применить» запускает процесс, а в окно сообщений выводится подробный лог с галочками и временем выполнения каждой миграции
+        </td>
+    </tr>
+</table>
 
-## 🔍 Безопасность — кнопка «Проверить» (Dry-run) показывает список планируемых миграций до их запуска.
+### Что это даёт
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #c62828; color: white; padding: 10px;">Было</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Стало</th>
+    </tr>
+    <tr><td style="padding: 10px;">Контроль через код</td><td style="padding: 10px;">✅ Визуальная обработка</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Непонятно, что будет applied</td><td style="padding: 10px;">✅ Режим проверки (Dry-run)</td></tr>
+    <tr><td style="padding: 10px;">Ошибки скрыты</td><td style="padding: 10px;">✅ Понятный лог с галочками</td></tr>
+</table>
 
-## 🚀 Скорость — кнопка «Применить» запускает процесс, а в окно сообщений выводится подробный лог с галочками и временем выполнения каждой миграции.
+---
 
-## 🛡 Защита от дурака — встроены проверки на пустые имена механизмов и защита от дублирования записей при сбоях.
+## 🔐 Доработка 3. Бесшовный переход (Мостиковая миграция)
+
+### Проблема
+На старых базах версия хранилась в одной константе (`Сеанс_ВерсияОбработки`). Если бы мы просто включили новый движок, он бы увидел версию `0.0.0.0` и попытался заново применить все старые миграции, что привело бы к дублированию данных и ошибкам.
+
+### Решение
+Создана специальная «мостиковая» миграция `Миграция_Сеанс_4_26_44_0_ИнициализацияРегистраВерсий`, которая при первом запуске считывает старую константу и записывает её значение в новый регистр.
+
+### Как это работает
+<table cellpadding="14" cellspacing="0" style="border-left: 5px solid #f5a623; background: #fff8f0; border-radius: 8px; margin: 12px 0; width: 100%;">
+    <tr>
+        <td style="padding: 14px 18px;">
+            <b>1.</b> 🔍 Движок запускает миграцию 4.26.44.0<br>
+            <b>2.</b> 📖 Она читает старую константу `Сеанс_ВерсияОбработки`<br>
+            <b>3.</b> 💾 Записывает это значение в новый регистр<br>
+            <b>4.</b> ⏭️ Движок понимает, что все старые миграции (4.24, 4.26.28) уже выполнены, и пропускает их
+        </td>
+    </tr>
+</table>
+
+### Что это даёт
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #c62828; color: white; padding: 10px;">Было</th>
+        <th style="background: #2e7d32; color: white; padding: 10px;">Стало</th>
+    </tr>
+    <tr><td style="padding: 10px;">Риск повторного применения</td><td style="padding: 10px;">✅ История сохраняется</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Ошибки при обновлении старых баз</td><td style="padding: 10px;">✅ Бесшовный переход</td></tr>
+</table>
+
+---
 
 ## 🛡 Защита от нежелательного поведения
-<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;"> <tr> <th style="background: #6a1b9a; color: white; padding: 10px;">Риск</th> <th style="background: #6a1b9a; color: white; padding: 10px;">Защита</th> </tr> <tr><td style="padding: 10px;">Падение миграции на середине</td><td style="padding: 10px;">Изолированные транзакции <code>НачатьТранзакцию()</code> / <code>ОтменитьТранзакцию()</code></td></tr> <tr style="background: #fef2f2;"><td style="padding: 10px;">Дублирование записей версий</td><td style="padding: 10px;">Использование <code>МенеджерЗаписи</code> вместо <code>НаборЗаписей.Добавить()</code></td></tr> <tr><td style="padding: 10px;">Запись пустых имен механизмов</td><td style="padding: 10px;">Проверка <code>ПустаяСтрока(ИмяМеханизма)</code> и вызов исключения</td></tr> <tr style="background: #fef2f2;"><td style="padding: 10px;">Потеря истории при переходе</td><td style="padding: 10px;">Специальная «мостиковая» миграция, читающая старую константу</td></tr> <tr><td style="padding: 10px;">Блокировка интерфейса</td><td style="padding: 10px;">Асинхронное <code>ПоказатьВопрос</code> с <code>ОписаниеОповещения</code></td></tr> </table>
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">Риск</th>
+        <th style="background: #6a1b9a; color: white; padding: 10px;">Защита</th>
+    </tr>
+    <tr><td style="padding: 10px;">Падение миграции на середине</td><td style="padding: 10px;">Изолированные транзакции <code>НачатьТранзакцию()</code> / <code>ОтменитьТранзакцию()</code></td></tr>
+    <tr style="background: #fef2f2;"><td style="padding: 10px;">Дублирование записей версий</td><td style="padding: 10px;">Использование <code>МенеджерЗаписи</code> вместо <code>НаборЗаписей.Добавить()</code></td></tr>
+    <tr><td style="padding: 10px;">Запись пустых имен механизмов</td><td style="padding: 10px;">Проверка <code>ПустаяСтрока(ИмяМеханизма)</code> и вызов исключения</td></tr>
+    <tr style="background: #fef2f2;"><td style="padding: 10px;">Потеря истории при переходе</td><td style="padding: 10px;">Специальная «мостиковая» миграция, читающая старую константу</td></tr>
+    <tr><td style="padding: 10px;">Блокировка интерфейса</td><td style="padding: 10px;">Асинхронное <code>ПоказатьВопрос</code> с <code>ОписаниеОповещения</code></td></tr>
+</table>
+
+---
+
 ## ⚠️ Ограничения
-Работает только для
-## ✅ Преобразований данных (заполнение новых полей, перенос из констант в регистры).
 
-## ✅ Изменения структуры выполняются отдельно (через обновление .cfe файла).
+### Работает только для
+- ✅ Преобразований **данных** (заполнение новых полей, перенос из констант в регистры).
+- ✅ Изменения структуры выполняются отдельно (через обновление `.cfe` файла).
 
-Не делает
-❌ Не изменяет метаданные (структуру таблиц) — только данные.
+### Не делает
+- ❌ Не изменяет метаданные (структуру таблиц) — только данные.
+- ❌ Не запускается автоматически при входе (требуется ручной запуск администратором или настройка регламентного задания).
 
-❌ Не запускается автоматически при входе (требуется ручной запуск администратором или настройка регламентного задания).
+### Прочее
+- Продолжительные миграции на больших таблицах рекомендуется запускать в нерабочее время.
+- Режим совместимости должен быть **8.3.13+**.
 
-Прочее
-Продолжительные миграции на больших таблицах рекомендуется запускать в нерабочее время.
-
-Режим совместимости должен быть 8.3.13+.
+---
 
 ## 📊 Сравнение: до и после
-<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;"> <tr> <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Параметр</th> <th style="background: linear-gradient(135deg, #c62828, #b71c1c); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Было</th> <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Станет</th> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Обновление данных</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Ручные скрипты</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Автоматические миграции</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Безопасность</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Риск поломки базы</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Транзакции и откаты</td> </tr> <tr> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>История версий</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Только одна константа</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Полный аудит в регистре</td> </tr> <tr style="background: #e8f5e9;"> <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Контроль</b></td> <td style="padding: 10px 14px; border: 1px solid #ddd;">Через код</td> <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Визуальная обработка (Dry-run)</td> </tr> </table>
+
+<table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 16px 0; font-size: 14px;">
+    <tr>
+        <th style="background: linear-gradient(135deg, #4a90d9, #357abd); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Параметр</th>
+        <th style="background: linear-gradient(135deg, #c62828, #b71c1c); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Было</th>
+        <th style="background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; font-weight: 600; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">Станет</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Обновление данных</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Ручные скрипты</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Автоматические миграции</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Безопасность</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Риск поломки базы</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Транзакции и откаты</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>История версий</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Только одна константа</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Полный аудит в регистре</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+        <td style="padding: 10px 14px; border: 1px solid #ddd;"><b>Контроль</b></td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">Через код</td>
+        <td style="padding: 10px 14px; border: 1px solid #ddd;">✅ Визуальная обработка (Dry-run)</td>
+    </tr>
+</table>
+
+---
+
 ## 📊 Совместимость
-<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;"> <tr> <th style="background: #4a90d9; color: white; padding: 10px;">Компонент</th> <th style="background: #4a90d9; color: white; padding: 10px;">Версия / Статус</th> </tr> <tr><td style="padding: 10px;">Платформа 1С:Предприятие</td><td style="padding: 10px;"><b>8.3.13+</b></td></tr> <tr style="background: #e8f5e9;"><td style="padding: 10px;">Режим совместимости</td><td style="padding: 10px;"><b>8.3.13+</b></td></tr> <tr><td style="padding: 10px;">БСП</td><td style="padding: 10px;">Не требуется (свой движок)</td></tr> <tr style="background: #e8f5e9;"><td style="padding: 10px;">Режим работы</td><td style="padding: 10px;">Клиент-серверный, файловый</td></tr> </table>
+
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; border-color: #ddd; margin: 12px 0; font-size: 14px;">
+    <tr>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Компонент</th>
+        <th style="background: #4a90d9; color: white; padding: 10px;">Версия / Статус</th>
+    </tr>
+    <tr><td style="padding: 10px;">Платформа 1С:Предприятие</td><td style="padding: 10px;"><b>8.3.13+</b></td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Режим совместимости</td><td style="padding: 10px;"><b>8.3.13+</b></td></tr>
+    <tr><td style="padding: 10px;">БСП</td><td style="padding: 10px;">Не требуется (свой движок)</td></tr>
+    <tr style="background: #e8f5e9;"><td style="padding: 10px;">Режим работы</td><td style="padding: 10px;">Клиент-серверный, файловый</td></tr>
+</table>
+
+---
 
 ## 📝 Состав изменений
-Добавлено
-1 регистр сведений: Механизм_Версии.
 
-2 общих модуля: Механизм_Миграции (движок), Механизм_МиграцииДанные (реестр).
+### Добавлено
+- `1` регистр сведений: `Механизм_Версии`.
+- `2` общих модуля: `Механизм_Миграции` (движок), `Механизм_МиграцииДанные` (реестр).
+- `1` обработка: `Механизм_УправлениеМиграциями`.
+- Реализованы исторические миграции для модулей «Сеанс», «Файлы», «Акты».
 
-1 обработка: Механизм_УправлениеМиграциями.
+### Изменено
+- Переход от хранения версии в константе `Сеанс_ВерсияОбработки` к регистру `Механизм_Версии`.
 
-Реализованы исторические миграции для модулей «Сеанс», «Файлы», «Акты».
+### Исправлено
+- Устранены ошибки дублирования записей при записи (переход с `Набор.Добавить` на `МенеджерЗаписи`).
+- Исправлена проблема с модальными окнами (переход на `ПоказатьВопрос`).
+- Добавлена защита от случайного создания записей с пустым именем механизма.
 
-Изменено
-Переход от хранения версии в константе Сеанс_ВерсияОбработки к регистру Механизм_Версии.
-
-Исправлено
-Устранены ошибки дублирования записей при записи (переход с Набор.Добавить на МенеджерЗаписи).
-
-Исправлена проблема с модальными окнами (переход на ПоказатьВопрос).
-
-Добавлена защита от случайного создания записей с пустым именем механизма.
+---
 
 ## ✍️ Заключение
-Релиз 4.26.45.1 закладывает фундамент для безопасного и предсказуемого развития системы:
 
-✅ Безопасность — транзакции, откаты и защита от дублей
+Релиз **4.26.45.1** закладывает фундамент для безопасного и предсказуемого развития системы:
 
-✅ Автоматизация — больше не нужно писать скрипты для обновления данных
+✅ **Безопасность** — транзакции, откаты и защита от дублей
 
-✅ Прозрачность — весь аудит в одном регистре
+✅ **Автоматизация** — больше не нужно писать скрипты для обновления данных
 
-✅ Удобство — понятный интерфейс администратора с логом выполнения
+✅ **Прозрачность** — весь аудит в одном регистре
 
-✅ Гибкость — легко добавлять новые миграции при выпуске следующих версий
+✅ **Удобство** — понятный интерфейс администратора с логом выполнения
+
+✅ **Гибкость** — легко добавлять новые миграции при выпуске следующих версий
+
+---
+
+## 📞 Поддержка
+
+По вопросам работы механизма, написания новых миграций или расширения функциональности обращаться к разработчику.
 
 
 ---
